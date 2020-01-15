@@ -1,0 +1,153 @@
+package KieRule;
+import main.entities.swiatla.Migacze;
+import main.entities.swiatla.Stopu;
+import main.entities.rozne.Bezpiecznik;
+import main.entities.rozne.Przewody;
+import main.entities.rozne.Zarowki;
+
+
+//0 - nie ustawione
+//1 - false
+//2 - true
+
+//migacze
+rule "migaczeCzySwieca"
+    when
+        migacze : Migacze();
+        eval(migacze.isCzySwieca() == 1)
+    then
+        migacze.setWiadomosc("Sprawdź bezpieczniki.");
+end
+
+rule "migaczeCzySwiecaOk"
+    when
+        migacze : Migacze();
+        eval(migacze.isCzySwieca() == 2)
+    then
+        migacze.setWiadomosc("Wyglada na to, ze wszystko jest okej!");
+end
+
+rule "migaczeCzySwiecaBezpiecznikiOk"
+    when
+        migacze : Migacze()
+        bezpiecznik : Bezpiecznik()
+        eval(migacze.isCzySwieca() == 1)
+        eval(bezpiecznik.isCzySpalony() == 1)
+     then
+        migacze.setWiadomosc("Sprawdź przewody.");
+end
+
+rule "migaczeCzySwiecaBezpiecznikiZly"
+    when
+        migacze : Migacze()
+        bezpiecznik : Bezpiecznik()
+        eval(migacze.isCzySwieca() == 1)
+        eval(bezpiecznik.isCzySpalony() == 2)
+     then
+        migacze.setWiadomosc("Wymien bezpiecznik.");
+end
+rule "migaczeCzySwiecaBezpiecznikiZle"
+    when
+        migacze : Migacze()
+        bezpiecznik : Bezpiecznik()
+        eval(migacze.isCzySwieca() == 1 && bezpiecznik.isCzySpalony() == 2)
+     then
+        migacze.setWiadomosc("Wymien bezpiecznik.");
+end
+
+rule "migaczeCzySwiecaBezpieczniki&PrzewodyOk"
+    when
+        migacze : Migacze()
+        bezpiecznik : Bezpiecznik()
+        przewody : Przewody()
+        eval(migacze.isCzySwieca() == 1)
+        eval(bezpiecznik.isCzySpalony() == 1)
+        eval(przewody.isCzyUszkodzone() == 1)
+     then
+        migacze.setWiadomosc("Uszkodzony alternator.");
+end
+
+rule "migaczeCzySwiecaBezpieczniki&PrzewodyZly"
+    when
+        migacze : Migacze()
+        bezpiecznik : Bezpiecznik()
+        przewody : Przewody()
+        eval(migacze.isCzySwieca() == 1)
+        eval(bezpiecznik.isCzySpalony() == 1)
+        eval(przewody.isCzyUszkodzone() == 2)
+     then
+        migacze.setWiadomosc("Wymień przewód.");
+end
+
+rule "migaczeCzyMigajaZaSzybko"
+    when
+        migacze: Migacze()
+        eval(migacze.isCzySwieca() == 2 && migacze.isCzyZaSzybkoMigaja() == 2)
+    then
+        migacze.setWiadomosc("Sprawdź czy jedna z żarówek migaczy nie jest przepalona.");
+end
+
+rule "migaczeCzyMigajaZaSzybkoZarowkaOk"
+    when
+        migacze: Migacze()
+        zarowka: Zarowki()
+        eval(migacze.isCzySwieca() == 2 && migacze.isCzyZaSzybkoMigaja() == 2)
+        eval(zarowka.isCzySpalone() == 1 )
+    then
+        migacze.setWiadomosc("Sprawdź napięcię żarówek!");
+end
+
+rule "migaczeCzyMigajaZaSzybkoZarowka&NapiecieOk"
+    when
+        migacze: Migacze()
+        zarowka: Zarowki()
+        eval(migacze.isCzyZaSzybkoMigaja() == 2 && migacze.isCzySwieca() == 2)
+        eval(zarowka.isCzySpalone() == 1 && zarowka.isNapiecie() == 2)
+    then
+        migacze.setWiadomosc("Uszkodzony przerywacz.");
+end
+
+rule "migaczeDzialaja"
+    when
+        migacze: Migacze()
+        eval(migacze.isCzySwieca() == 2 && migacze.isCzySwieca() == 1 && migacze.isCzyDzialaPrawaStrona() == 2 && migacze.isCzyDzialaLewaStrona() == 2)
+     then
+        migacze.setWiadomosc("Wygląda na to, że migacze działają prawidłowo!");
+end
+
+rule "stopCzySwieci"
+    when
+        stopu: Stopu()
+        eval(stopu.getCzySwiecaStop() == 1)
+    then
+        stopu.setWiadomosc("Sprawdz bezpieczniki.");
+end
+
+rule "stopCzySwieciOk"
+when
+        stopu: Stopu()
+        eval(stopu.getCzySwiecaStop() == 2)
+then
+        stopu.setWiadomosc("Wyglada na to, ze dzialaja poprawnie.");
+end
+
+
+rule "stopCzySwieciBezpiecznikOk"
+    when
+        stopu: Stopu()
+        bezpiecznik : Bezpiecznik()
+        eval((stopu.getCzySwiecaStop() == 1) && (bezpiecznik.isCzySpalony() == 1))
+    then
+        stopu.setWiadomosc("Sprawdz zarówkę.");
+end
+
+rule "stopCzySwieciBezpiecznikZly"
+    when
+        stopu: Stopu()
+        bezpiecznik : Bezpiecznik()
+        eval(stopu.getCzySwiecaStop() == 1 && bezpiecznik.isCzySpalony() == 2)
+    then
+        stopu.setWiadomosc("Wymień bezpiecznik.");
+end
+
+
