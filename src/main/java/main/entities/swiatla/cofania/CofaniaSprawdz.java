@@ -1,16 +1,23 @@
-package main.entities.swiatla;
-import main.entities.rozne.Przewody;
-import  main.entities.rozne.Zarowki;
+package main.entities.swiatla.cofania;
+
 import main.entities.rozne.Bezpiecznik;
-public class MigaczeSprawdz {
-    Migacze migacze;
+import main.entities.rozne.Przewody;
+import main.entities.rozne.Zarowki;
+import  main.entities.swiatla.cofania.Cofania;
+
+public class CofaniaSprawdz {
+
+    Cofania cofania;
     Bezpiecznik bezpiecznik;
     Zarowki zarowki;
     Przewody przewody;
 
+    public Cofania getCofania() {
+        return cofania;
+    }
 
-    public Migacze getMigacze() {
-        return migacze;
+    public void setCofania(Cofania cofania) {
+        this.cofania = cofania;
     }
 
     public Bezpiecznik getBezpiecznik() {
@@ -27,9 +34,6 @@ public class MigaczeSprawdz {
 
     // Setter Methods
 
-    public void setMigacze(Migacze MigaczeObject) {
-        this.migacze = MigaczeObject;
-    }
 
     public void setBezpiecznik(Bezpiecznik BezpiecznikObject) {
         this.bezpiecznik = BezpiecznikObject;

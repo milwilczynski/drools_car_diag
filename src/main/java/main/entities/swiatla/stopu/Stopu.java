@@ -1,4 +1,4 @@
-package main.entities.swiatla;
+package main.entities.swiatla.stopu;
 
 
 public class Stopu {

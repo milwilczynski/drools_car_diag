@@ -28,7 +28,6 @@ public class DroolConfig {
 
     @Bean
     public KieContainer getKieContainer() throws IOException {
-        System.out.println("Container created...");
         getKieRepository();
         KieBuilder kb = kieServices.newKieBuilder(getKieFileSystem());
         kb.buildAll();
@@ -40,7 +39,7 @@ public class DroolConfig {
 
     private void getKieRepository() {
         final KieRepository kieRepository = kieServices.getRepository();
-        kieRepository.addKieModule(new KieModule(){
+        kieRepository.addKieModule(new KieModule() {
             public ReleaseId getReleaseId() {
                 return kieRepository.getDefaultReleaseId();
             }
@@ -49,7 +48,6 @@ public class DroolConfig {
 
     @Bean
     public KieSession getKieSession() throws IOException {
-        System.out.println("session created...");
         return getKieContainer().newKieSession();
 
     }

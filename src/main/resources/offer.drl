@@ -1,6 +1,7 @@
 package KieRule;
-import main.entities.swiatla.Migacze;
-import main.entities.swiatla.Stopu;
+import main.entities.swiatla.migacze.Migacze
+import main.entities.swiatla.stopu.Stopu;
+import main.entities.swiatla.cofania.Cofania;
 import main.entities.rozne.Bezpiecznik;
 import main.entities.rozne.Przewody;
 import main.entities.rozne.Zarowki;
@@ -34,7 +35,7 @@ rule "migaczeCzySwiecaBezpiecznikiOk"
         eval(migacze.isCzySwieca() == 1)
         eval(bezpiecznik.isCzySpalony() == 1)
      then
-        migacze.setWiadomosc("Sprawdź przewody.");
+        migacze.setWiadomosc("Sprawdź zarówkę.");
 end
 
 rule "migaczeCzySwiecaBezpiecznikiZly"
@@ -44,39 +45,59 @@ rule "migaczeCzySwiecaBezpiecznikiZly"
         eval(migacze.isCzySwieca() == 1)
         eval(bezpiecznik.isCzySpalony() == 2)
      then
-        migacze.setWiadomosc("Wymien bezpiecznik.");
+        migacze.setWiadomosc("Wymien bezpiecznik - Uszkodzony.");
 end
-rule "migaczeCzySwiecaBezpiecznikiZle"
+
+rule "migaczeCzySwiecaBezpieczniki&ZarowkaOk"
     when
         migacze : Migacze()
         bezpiecznik : Bezpiecznik()
-        eval(migacze.isCzySwieca() == 1 && bezpiecznik.isCzySpalony() == 2)
+        zarowka : Zarowki()
+        eval(migacze.isCzySwieca() == 1)
+        eval(bezpiecznik.isCzySpalony() == 1)
+        eval(zarowka.isCzySpalone() == 1)
      then
-        migacze.setWiadomosc("Wymien bezpiecznik.");
+        migacze.setWiadomosc("Sprawdź przewody");
 end
 
-rule "migaczeCzySwiecaBezpieczniki&PrzewodyOk"
+rule "migaczeCzySwiecaBezpieczniki&ZarowkaZla"
+    when
+        migacze : Migacze()
+        bezpiecznik : Bezpiecznik()
+        zarowka : Zarowki()
+        eval(migacze.isCzySwieca() == 1)
+        eval(bezpiecznik.isCzySpalony() == 1)
+        eval(zarowka.isCzySpalone() == 2)
+     then
+        migacze.setWiadomosc("Wymień żarówkę - Uszkodzona.");
+end
+
+rule "migaczeCzySwiecaBezpieczniki&Zarowka&PrzewodyOk"
     when
         migacze : Migacze()
         bezpiecznik : Bezpiecznik()
         przewody : Przewody()
+        zarowka : Zarowki()
         eval(migacze.isCzySwieca() == 1)
         eval(bezpiecznik.isCzySpalony() == 1)
         eval(przewody.isCzyUszkodzone() == 1)
+        eval(zarowka.isCzySpalone() == 1)
      then
-        migacze.setWiadomosc("Uszkodzony alternator.");
+        migacze.setWiadomosc("Uszkodzony alternator / Wyczerpany akumulator.");
 end
 
-rule "migaczeCzySwiecaBezpieczniki&PrzewodyZly"
+rule "migaczeCzySwiecaBezpieczniki&Zarowka&PrzewodyZla"
     when
         migacze : Migacze()
         bezpiecznik : Bezpiecznik()
         przewody : Przewody()
+        zarowka : Zarowki()
         eval(migacze.isCzySwieca() == 1)
         eval(bezpiecznik.isCzySpalony() == 1)
         eval(przewody.isCzyUszkodzone() == 2)
+        eval(zarowka.isCzySpalone() == 1)
      then
-        migacze.setWiadomosc("Wymień przewód.");
+        migacze.setWiadomosc("Wymień przewód - Uszkodzony.");
 end
 
 rule "migaczeCzyMigajaZaSzybko"
@@ -91,20 +112,37 @@ rule "migaczeCzyMigajaZaSzybkoZarowkaOk"
     when
         migacze: Migacze()
         zarowka: Zarowki()
-        eval(migacze.isCzySwieca() == 2 && migacze.isCzyZaSzybkoMigaja() == 2)
-        eval(zarowka.isCzySpalone() == 1 )
+        eval(migacze.isCzySwieca() == 2 && migacze.isCzyZaSzybkoMigaja() == 2 && zarowka.isCzySpalone() == 1 && zarowka.isNapiecie() == 0 )
     then
         migacze.setWiadomosc("Sprawdź napięcię żarówek!");
 end
+
+rule "migaczeCzyMigajaZaSzybkoZarowkaZla"
+    when
+        migacze: Migacze()
+        zarowka: Zarowki()
+        eval(migacze.isCzySwieca() == 2 && migacze.isCzyZaSzybkoMigaja() == 2 && zarowka.isCzySpalone() == 2 )
+    then
+        migacze.setWiadomosc("Wymień żarówkę - Uszkodzona.");
+end
+
+rule "migaczeCzyMigajaZaSzybkoZarowkaNapiecieZle"
+    when
+        migacze: Migacze()
+        zarowka: Zarowki()
+        eval(migacze.isCzySwieca() == 2 && migacze.isCzyZaSzybkoMigaja() == 2 && zarowka.isCzySpalone() == 1 && zarowka.isNapiecie() == 1 )
+    then
+        migacze.setWiadomosc("Wmień Zarówkę - Z poprawnym napięciem.");
+end
+
 
 rule "migaczeCzyMigajaZaSzybkoZarowka&NapiecieOk"
     when
         migacze: Migacze()
         zarowka: Zarowki()
-        eval(migacze.isCzyZaSzybkoMigaja() == 2 && migacze.isCzySwieca() == 2)
-        eval(zarowka.isCzySpalone() == 1 && zarowka.isNapiecie() == 2)
+        eval(migacze.isCzyZaSzybkoMigaja() == 2 &&  migacze.isCzySwieca() == 2 && zarowka.isCzySpalone() == 1 && zarowka.isNapiecie() == 2)
     then
-        migacze.setWiadomosc("Uszkodzony przerywacz.");
+        migacze.setWiadomosc("Wymień przerywacz - Uszkodzony.");
 end
 
 rule "migaczeDzialaja"
@@ -114,11 +152,13 @@ rule "migaczeDzialaja"
      then
         migacze.setWiadomosc("Wygląda na to, że migacze działają prawidłowo!");
 end
+//migacze stop
 
+//stopu start
 rule "stopCzySwieci"
     when
         stopu: Stopu()
-        eval(stopu.getCzySwiecaStop() == 1)
+        eval(stopu.getCzySwiecaStop() == 1 && stopu.getCzyDzialaCzujnikHamowania() == 0)
     then
         stopu.setWiadomosc("Sprawdz bezpieczniki.");
 end
@@ -127,6 +167,7 @@ rule "stopCzySwieciOk"
 when
         stopu: Stopu()
         eval(stopu.getCzySwiecaStop() == 2)
+        eval(stopu.getCzyDzialaCzujnikHamowania() == 0)
 then
         stopu.setWiadomosc("Wyglada na to, ze dzialaja poprawnie.");
 end
@@ -136,7 +177,8 @@ rule "stopCzySwieciBezpiecznikOk"
     when
         stopu: Stopu()
         bezpiecznik : Bezpiecznik()
-        eval((stopu.getCzySwiecaStop() == 1) && (bezpiecznik.isCzySpalony() == 1))
+        eval(stopu.getCzySwiecaStop() == 1)
+        eval(bezpiecznik.isCzySpalony() == 1)
     then
         stopu.setWiadomosc("Sprawdz zarówkę.");
 end
@@ -145,9 +187,199 @@ rule "stopCzySwieciBezpiecznikZly"
     when
         stopu: Stopu()
         bezpiecznik : Bezpiecznik()
-        eval(stopu.getCzySwiecaStop() == 1 && bezpiecznik.isCzySpalony() == 2)
+        eval(stopu.getCzySwiecaStop() == 1)
+        eval(bezpiecznik.isCzySpalony() == 2)
     then
+        System.out.println(stopu.getCzySwiecaStop() + " " + bezpiecznik.isCzySpalony());
         stopu.setWiadomosc("Wymień bezpiecznik.");
 end
 
+rule "stopCzySwieciBezpiecznik&ZarowkaOk"
+    when
+        stopu: Stopu()
+        bezpiecznik : Bezpiecznik()
+        zarowka : Zarowki()
+        eval(stopu.getCzySwiecaStop() == 1)
+        eval(bezpiecznik.isCzySpalony() == 1)
+        eval(zarowka.isCzySpalone() == 1)
+    then
+        stopu.setWiadomosc("Sprawdz przewody.");
+end
 
+
+rule "stopCzySwieciBezpiecznikOk&ZarowkaZla"
+    when
+        stop: Stopu()
+        bezpiecznik : Bezpiecznik()
+        zarowka : Zarowki()
+        eval(stop.getCzySwiecaStop() == 1)
+        eval(bezpiecznik.isCzySpalony() == 1)
+        eval(zarowka.isCzySpalone() == 2)
+    then
+        stop.setWiadomosc("Wymień żarówkę.");
+end
+
+rule "stopCzySwieciBezpiecznik&Zarowka&PrzewodOk"
+    when
+        stop: Stopu()
+        bezpiecznik : Bezpiecznik()
+        zarowka : Zarowki()
+        przewod : Przewody()
+        eval(stop.getCzySwiecaStop() == 1)
+        eval(bezpiecznik.isCzySpalony() == 1)
+        eval(zarowka.isCzySpalone() == 1)
+    then
+        stop.setWiadomosc("Sprawdź czujnik hamowania.");
+end
+
+rule "stopCzySwieciBezpiecznik&Zarowka&PrzewodZly"
+    when
+        stop: Stopu()
+        bezpiecznik : Bezpiecznik()
+        zarowka : Zarowki()
+        przewod : Przewody()
+        eval(stop.getCzySwiecaStop() == 1)
+        eval(bezpiecznik.isCzySpalony() == 1)
+        eval(zarowka.isCzySpalone() == 1)
+        eval(przewod.isCzyUszkodzone() == 2)
+    then
+        stop.setWiadomosc("Wymień przewód.");
+end
+
+rule "stopCzySwieciBezpiecznik&Zarowka&Przewod&CzujnikOk"
+    when
+        stop: Stopu()
+        bezpiecznik : Bezpiecznik()
+        zarowka : Zarowki()
+        przewod : Przewody()
+        eval(stop.getCzySwiecaStop()==1 && stop.getCzyDzialaCzujnikHamowania() == 2)
+        eval(bezpiecznik.isCzySpalony() == 1)
+        eval(zarowka.isCzySpalone() == 1)
+        eval(przewod.isCzyUszkodzone() == 1)
+    then
+        stop.setWiadomosc("Sprawdź czy dochodzi napięcie - jeżeli tak, uszkodzony czujnik hamowania.");
+end
+
+rule "stopCzySwieciBezpiecznik&Zarowka&Przewod&CzujnikZly"
+    when
+        stop: Stopu()
+        bezpiecznik : Bezpiecznik()
+        zarowka : Zarowki()
+        przewod : Przewody()
+        eval(stop.getCzySwiecaStop()==1 && stop.getCzyDzialaCzujnikHamowania() == 1)
+        eval(bezpiecznik.isCzySpalony() == 1)
+        eval(zarowka.isCzySpalone() == 1)
+        eval(przewod.isCzyUszkodzone() == 1)
+
+    then
+        stop.setWiadomosc("Wymień czujnik hamowania.");
+end
+//stopu Stop - 24
+
+//cofania start
+rule "cofaniaCzySwieciNie"
+    when
+        cofania : Cofania()
+        eval(cofania.getCzySwieca() == 1)
+     then
+        cofania.setWiadomosc("Sprawdź bezpieczniki.");
+end
+
+rule "cofaniaCzySwieciTak"
+    when
+        cofania : Cofania()
+        eval(cofania.getCzySwieca() == 2)
+     then
+        cofania.setWiadomosc("Dzialają poprawnie / Uszkodzony czujnik, jeżeli świecą ciągle.");
+end
+
+rule "cofaniaCzySwieciNieBezpiecznikOk"
+    when
+        cofania : Cofania()
+        bezpiecznik : Bezpiecznik()
+        eval(cofania.getCzySwieca() == 1)
+        eval(bezpiecznik.isCzySpalony() == 1)
+     then
+        cofania.setWiadomosc("Sprawdź żarówki.");
+end
+
+rule "cofaniaCzySwieciNieBezpiecznikZly"
+    when
+        cofania : Cofania()
+        bezpiecznik : Bezpiecznik()
+        eval(cofania.getCzySwieca() == 1)
+        eval(bezpiecznik.isCzySpalony() == 2)
+     then
+        cofania.setWiadomosc("Wymień bezpiecznik - Uszkodzony.");
+end
+
+rule "cofaniaCzySwieciNieBezpiecznik&ZarowkaOk"
+    when
+        cofania : Cofania()
+        bezpiecznik : Bezpiecznik()
+        zarowka: Zarowki()
+        eval(cofania.getCzySwieca() == 1)
+        eval(bezpiecznik.isCzySpalony() == 1)
+        eval(zarowka.isCzySpalone() == 1)
+     then
+        cofania.setWiadomosc("Sprawdź przewody.");
+end
+
+rule "cofaniaCzySwieciNieBezpiecznik&ZarowkaZla"
+    when
+        cofania : Cofania()
+        bezpiecznik : Bezpiecznik()
+        zarowka: Zarowki()
+        eval(cofania.getCzySwieca() == 1)
+        eval(bezpiecznik.isCzySpalony() == 1)
+        eval(zarowka.isCzySpalone() == 2)
+     then
+        cofania.setWiadomosc("Wymień żarówkę - Uszkodzona.");
+end
+
+rule "cofaniaCzySwieciNieBezpiecznik&Zarowka&PrzewodOk"
+    when
+        cofania : Cofania()
+        bezpiecznik : Bezpiecznik()
+        zarowka: Zarowki()
+        przewod: Przewody()
+        eval(cofania.getCzySwieca() == 1)
+        eval(bezpiecznik.isCzySpalony() == 1)
+        eval(zarowka.isCzySpalone() == 1)
+        eval(przewod.isCzyUszkodzone() == 1)
+     then
+        cofania.setWiadomosc("Wymień czujnik biegu wstecznego - Uszkodzony.");
+end
+
+rule "cofaniaCzySwieciNieBezpiecznik&Zarowka&PrzewodZly"
+    when
+        cofania : Cofania()
+        bezpiecznik : Bezpiecznik()
+        zarowka: Zarowki()
+        przewod: Przewody()
+        eval(cofania.getCzySwieca() == 1)
+        eval(bezpiecznik.isCzySpalony() == 1)
+        eval(zarowka.isCzySpalone() == 1)
+        eval(przewod.isCzyUszkodzone() == 2)
+     then
+        cofania.setWiadomosc("Wymień przewód - Uszkodzony.");
+end
+
+rule "cofaniaCzySwieciNieBezpiecznik&Zarowka&Przewod&CzujnikOk"
+    when
+        cofania : Cofania()
+        bezpiecznik : Bezpiecznik()
+        zarowka: Zarowki()
+        przewod: Przewody()
+        eval(cofania.getCzySwieca() == 1 && cofania.getCzyCzujnikBieguDziala() == 2)
+        eval(bezpiecznik.isCzySpalony() == 1)
+        eval(zarowka.isCzySpalone() == 1)
+        eval(przewod.isCzyUszkodzone() == 1)
+     then
+        cofania.setWiadomosc("Coś poszło nie tak - skonsultuj się z mechanikiem.");
+end
+
+//swiatla cofania Stop
+//33
+
+//swiatla oswietlajace start

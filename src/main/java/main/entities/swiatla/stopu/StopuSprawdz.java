@@ -1,9 +1,9 @@
-package main.entities.swiatla;
+package main.entities.swiatla.stopu;
 
 import main.entities.rozne.Bezpiecznik;
 import main.entities.rozne.Przewody;
 import main.entities.rozne.Zarowki;
-import main.entities.swiatla.Stopu;
+
 public class StopuSprawdz {
     Stopu stopu;
     Bezpiecznik bezpiecznik;

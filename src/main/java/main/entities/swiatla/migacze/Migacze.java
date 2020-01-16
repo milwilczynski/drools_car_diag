@@ -1,4 +1,4 @@
-package main.entities.swiatla;
+package main.entities.swiatla.migacze;
 
 public class Migacze {
     // 0 - nie ustawiony
