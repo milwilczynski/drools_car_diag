@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<style>
+    #s1, #s2, #s3, #s4,{
+        display: block;
+    }
+</style>
+<div style="flex-direction: row; font-family: 'Arial Narrow'; width: 100%;">
+    <img style="margin-left: 45%" th:src="@{/img/parts/stop.jpg}">
+    <ul onclick="">
+        <li onclick="prepareStopuJSON()" id="s0"> Czy stop działa?
+            <br/>
+            <input  type="radio" name="0"  value="2"> Tak
+            <input  type="radio" name="0" value="1"> Nie
+            <input  type="radio" name="0" value="0" checked> Nie sprawdzone
+        </li>
+        <li onclick="prepareStopuJSON()" id="s1">
+            Czy bezpiecznik jest przepalony?
+            <br />
+            <input type="radio" name="1"  value="2" onclick=""> Tak
+            <input type="radio" name="1" value="1"> Nie
+            <input  type="radio" name="1" value="0" checked> Nie sprawdzone
+        </li>
+        <li onclick="prepareStopuJSON()" id="s2">
+            Czy żarówka jest przepalona?
+            <br />
+            <input type="radio" name="2"  value="2"> Tak
+            <input  type="radio" name="2" value="1"> Nie
+            <input  type="radio" name="2" value="0" checked> Nie sprawdzone
+        </li>
+        <li onclick="prepareStopuJSON()" id="s3">
+            Czy przewód jest uszkodzony?
+            <br />
+            <input type="radio" name="3"  value="2"> Tak
+            <input type="radio" name="3" value="1"> Nie
+            <input  type="radio" name="3" value="0" checked> Nie sprawdzone
+        </li>
+        <li onclick="prepareStopuJSON()" id="s4">
+            Czy czujnik hamowania działa?
+            <br />
+            <input type="radio" name="4" value="2"> Tak
+            <input type="radio" name="4" value="1"> Nie
+            <input type="radio" name="4" value="0" checked> Nie sprawdzone
+        </li>
+    </ul>
+</div>
+</html>

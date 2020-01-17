@@ -1,10 +1,10 @@
 package KieRule;
-import main.entities.swiatla.migacze.Migacze
-import main.entities.swiatla.stopu.Stopu;
-import main.entities.swiatla.cofania.Cofania;
-import main.entities.rozne.Bezpiecznik;
-import main.entities.rozne.Przewody;
-import main.entities.rozne.Zarowki;
+import com.drools_car_diag.droolsCar.entities.swiatla.migacze.Migacze
+import com.drools_car_diag.droolsCar.entities.swiatla.stopu.Stopu;
+import com.drools_car_diag.droolsCar.entities.swiatla.cofania.Cofania;
+import com.drools_car_diag.droolsCar.entities.rozne.Bezpiecznik;
+import com.drools_car_diag.droolsCar.entities.rozne.Przewody;
+import com.drools_car_diag.droolsCar.entities.rozne.Zarowki;
 
 
 //0 - nie ustawione
