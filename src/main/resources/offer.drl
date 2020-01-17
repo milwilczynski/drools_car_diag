@@ -136,11 +136,14 @@ rule "migaczeCzyMigajaZaSzybkoZarowkaNapiecieZle"
 end
 
 
-rule "migaczeCzyMigajaZaSzybkoZarowka&NapiecieOk"
+rule "migaczeCzyMigajaZaSzybkoZarowka&NapiecieOdpowiednie"
     when
         migacze: Migacze()
         zarowka: Zarowki()
-        eval(migacze.isCzyZaSzybkoMigaja() == 2 &&  migacze.isCzySwieca() == 2 && zarowka.isCzySpalone() == 1 && zarowka.isNapiecie() == 2)
+        eval(migacze.isCzySwieca() == 2)
+        eval(migacze.isCzyZaSzybkoMigaja() == 2)
+        eval(zarowka.isCzySpalone() == 1)
+        eval(zarowka.isNapiecie() == 2)
     then
         migacze.setWiadomosc("Wymień przerywacz - Uszkodzony.");
 end
@@ -190,7 +193,6 @@ rule "stopCzySwieciBezpiecznikZly"
         eval(stopu.getCzySwiecaStop() == 1)
         eval(bezpiecznik.isCzySpalony() == 2)
     then
-        System.out.println(stopu.getCzySwiecaStop() + " " + bezpiecznik.isCzySpalony());
         stopu.setWiadomosc("Wymień bezpiecznik.");
 end
 

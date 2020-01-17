@@ -1,17 +1,25 @@
 function chceckIfMigacze() {
+    document.getElementById("m3").style.display = "block";
+
+    if(document.querySelector('input[name="0"]:checked').value == 0){
+        document.getElementById("m3").style.display = "none";
+    }
+    if(document.querySelector('input[name="0"]:checked').value == 2){
+        document.getElementById("m1").style.display = "block"
+        document.getElementById("m5").style.display = "block";
+    }
+    else{
+        document.getElementById("m1").style.display = "none";
+        document.getElementById("m5").style.display = "none";
+    }
+
     if(document.querySelector('input[name="0"]:checked').value == 1){
         document.getElementById("m2").style.display = "block";
-        document.getElementById("m1").style.display = "none";
-        if(document.querySelector('input[name="2"]:checked').value == 1g){
-            document.getElementById("m3").style.display = "block";
-        }
-
-
-
-    }else{
-        //migaja za szbko --V
-        document.getElementById("m1").style.display = "block";
+        document.getElementById("m4").style.display = "block";
+    }
+    else{
         document.getElementById("m2").style.display = "none";
+        document.getElementById("m4").style.display = "none";
     }
 
 }
@@ -19,28 +27,31 @@ function chceckIfMigacze() {
 function closePopUp(){
     document.getElementById("containerDiv").style.display = "none";
 }
-
-function sendMigaczJSON(){
+function prepareMigaczJSON(){
+    var swieca = 0;
     var migaja = 0;
     var spalony = 0;
     var spalonaZarowka = 0;
     var napiecie = 0;
     var uszkodzony = 0;
-    if(document.getElementById("m1").style.display == "block"){
-        migaja = document.querySelector('input[name="1"]:checked').value;
+
+    if(parseInt(document.querySelector('input[name="0"]:checked').value) == 1){
+        swieca = parseInt(document.querySelector('input[name="0"]:checked').value);
+        spalony = parseInt(document.querySelector('input[name="2"]:checked').value);
+        spalonaZarowka = parseInt(document.querySelector('input[name="3"]:checked').value);
+        uszkodzony  = parseInt(document.querySelector('input[name="4"]:checked').value);
+        sendMigaczJSON(swieca, migaja, spalony, spalonaZarowka, napiecie, uszkodzony);
     }
-    if(document.getElementById("m2").style.display == "block" ){
-        spalony = document.querySelector('input[name="2"]:checked').value;
+
+    if(parseInt(document.querySelector('input[name="0"]:checked').value) == 2){
+        swieca = parseInt(document.querySelector('input[name="0"]:checked').value);
+        migaja = parseInt(document.querySelector('input[name="1"]:checked').value);
+        spalonaZarowka = parseInt(document.querySelector('input[name="3"]:checked').value);
+        napiecie  = parseInt(document.querySelector('input[name="5"]:checked').value);
+        sendMigaczJSON(swieca, migaja, spalony, spalonaZarowka, napiecie, uszkodzony);
     }
-    if(document.getElementById("m3").style.display == "block"){
-        spalonaZarowka = document.querySelector('input[name="3"]:checked').value;
-    }
-    if(document.getElementById("m5").style.display == "block" ){
-        napiecie = document.querySelector('input[name="5"]:checked').value;
-    }
-    if(document.getElementById("m4").style.display == "block"){
-        uszkodzony = document.querySelector('input[name="4"]:checked').value;
-    }
+}
+function sendMigaczJSON(swieca, migaja, spalony, spalonaZarowka, napiecie, uszkodzony){
 
     const xmlhttp = new XMLHttpRequest();
     const url="/swiatla/migacze";
@@ -48,7 +59,7 @@ function sendMigaczJSON(){
     xmlhttp.setRequestHeader("Content-Type", "application/json");
     xmlhttp.send(JSON.stringify({
         "migacze":{
-            "czySwieca": parseInt(document.querySelector('input[name="0"]:checked').value),
+            "czySwieca": swieca,
             "czyZaSzybkoMigaja": migaja,
             "czyDzialaLewaStrona":0,
             "czyDzialaPrawaStrona":0,
@@ -59,7 +70,7 @@ function sendMigaczJSON(){
         },
         "zarowki":{
             "czySpalone": spalonaZarowka,
-            "napiece": napiecie
+            "napiecie": napiecie
         },
         "przewody":{
             "czyUszkodzone":uszkodzony
@@ -71,7 +82,7 @@ function sendMigaczJSON(){
             var object = (xmlhttp.responseText);
             document.getElementById('containerDiv').style.display = "none";
             if(object.toString().length < 4){
-
+                //nie pokazuj nic
             }else {
                 document.getElementById("containerDiv").innerHTML = object.toString();
                 document.getElementById('containerDiv').style.display = "block";

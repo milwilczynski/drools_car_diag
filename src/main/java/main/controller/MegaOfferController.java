@@ -17,11 +17,13 @@ public class MegaOfferController {
         KieSession session;
         DroolConfig dg = new DroolConfig();
         session = dg.getKieSession();
+        System.out.println(migaczeSprawdz.getZarowki().isNapiecie());
         session.insert(migaczeSprawdz.getMigacze());
         session.insert(migaczeSprawdz.getBezpiecznik());
         session.insert(migaczeSprawdz.getZarowki());
         session.insert(migaczeSprawdz.getPrzewody());
         session.fireAllRules();
+        System.out.println(migaczeSprawdz.getZarowki().isNapiecie());
         session.destroy();
         return migaczeSprawdz.getMigacze().getWiadomosc();
     }
