@@ -175,3 +175,213 @@ function sendStopuJSON(swieca, spalony, spalonaZarowka,  uszkodzony, czujnik) {
         }
     }
 }
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//KlockiHamulcowe
+function prepareKlockiHamulcoweJSON(){
+    var zuzyte = parseInt(document.querySelector('input[name="0"]:checked').value);
+    var przegrzewaja = parseInt(document.querySelector('input[name="1"]:checked').value);
+
+    sendKlockiHamulcoweJSON(zuzyte, przegrzewaja);
+}
+
+function sendKlockiHamulcoweJSON(zuzyte, przegrzewaja) {
+    const xmlhttp = new XMLHttpRequest();
+    const url="/hamulce/klockihamulcowe";
+    xmlhttp.open("POST", url, true);
+    xmlhttp.setRequestHeader("Content-Type", "application/json");
+    xmlhttp.send(JSON.stringify(
+        {
+            "czyZuzyte": zuzyte,
+            "czySiePrzegrzewaja": przegrzewaja
+        }
+    ));
+
+    xmlhttp.onreadystatechange = function(){
+        if(xmlhttp.status == 200){
+            var object = (xmlhttp.responseText);
+            document.getElementById('containerDiv').style.display = "none";
+            if(object.toString().length < 4){
+                //nie pokazuj nic
+            }else {
+                document.getElementById("containerDiv").innerHTML = object.toString();
+                document.getElementById('containerDiv').style.display = "block";
+
+                //hide after 3s
+                setTimeout(function () {document.getElementById('containerDiv').style.display='none'}, 3000); return false
+            }
+        }else{
+            console.log("nie dziala");
+        }
+    }
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//amortyzatory
+function prepareAmortyzatoryJSON(){
+    var drogaHamowania = parseInt(document.querySelector('input[name="0"]:checked').value);
+    var wyciekOleju = parseInt(document.querySelector('input[name="1"]:checked').value);
+    var odrywajace = parseInt(document.querySelector('input[name="2"]:checked').value);
+
+    sendAmortyzatoryJSON(drogaHamowania, wyciekOleju, odrywajace);
+}
+
+function sendAmortyzatoryJSON(drogaHamowania, wyciekOleju, odrywajace) {
+    const xmlhttp = new XMLHttpRequest();
+    const url="/zawieszenie/amortyzatory";
+    xmlhttp.open("POST", url, true);
+    xmlhttp.setRequestHeader("Content-Type", "application/json");
+    xmlhttp.send(JSON.stringify(
+        {
+            "wydluzonaDrogaHamowania": drogaHamowania,
+            "wyciekOlejuZAmortyzatora": wyciekOleju,
+            "odrywajaceSieKolaOdNawierzchni": odrywajace,
+            "wiadomosc": ""
+        }
+    ));
+
+    xmlhttp.onreadystatechange = function(){
+        if(xmlhttp.status == 200){
+            var object = (xmlhttp.responseText);
+            document.getElementById('containerDiv').style.display = "none";
+            if(object.toString().length < 4){
+                //nie pokazuj nic
+            }else {
+                document.getElementById("containerDiv").innerHTML = object.toString();
+                document.getElementById('containerDiv').style.display = "block";
+
+                //hide after 3s
+                setTimeout(function () {document.getElementById('containerDiv').style.display='none'}, 3000); return false
+            }
+        }else{
+            console.log("nie dziala");
+        }
+    }
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//Geometria Zawieszenia
+function prepareGeometriaZawieszeniaJSON(){
+    var skret = parseInt(document.querySelector('input[name="0"]:checked').value);
+    var zbieznosc = parseInt(document.querySelector('input[name="1"]:checked').value);
+    var kat = parseInt(document.querySelector('input[name="2"]:checked').value);
+    var pisk = parseInt(document.querySelector('input[name="3"]:checked').value);
+    sendGeometriaZawieszeniaJSON(skret, zbieznosc, kat, pisk);
+}
+
+function sendGeometriaZawieszeniaJSON(skret, zbieznosc, kat, pisk) {
+    const xmlhttp = new XMLHttpRequest();
+    const url="/zawieszenie/geometriazawieszenia";
+    xmlhttp.open("POST", url, true);
+    xmlhttp.setRequestHeader("Content-Type", "application/json");
+    xmlhttp.send(JSON.stringify(
+        {
+            "samoistneSkrecaniePojazdu": skret,
+            "odpowiedniaZbieznoscKol": zbieznosc,
+            "katPochyleniaKol": kat,
+            "czyPiskOponPodczasSkrecania": pisk,
+            "wiadomosc": ""
+        }
+    ));
+
+    xmlhttp.onreadystatechange = function(){
+        if(xmlhttp.status == 200){
+            var object = (xmlhttp.responseText);
+            document.getElementById('containerDiv').style.display = "none";
+            if(object.toString().length < 4){
+                //nie pokazuj nic
+            }else {
+                document.getElementById("containerDiv").innerHTML = object.toString();
+                document.getElementById('containerDiv').style.display = "block";
+
+                //hide after 3s
+                setTimeout(function () {document.getElementById('containerDiv').style.display='none'}, 3000); return false
+            }
+        }else{
+            console.log("nie dziala");
+        }
+    }
+}
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//Stabilizatory
+function prepareStabilizatoryJSON(){
+    var stuka = parseInt(document.querySelector('input[name="0"]:checked').value);
+    var zuzyta = parseInt(document.querySelector('input[name="1"]:checked').value);
+
+    sendStabilizatoryJSON(stuka, zuzyta);
+}
+
+function sendStabilizatoryJSON(stuka, zuzyta) {
+    const xmlhttp = new XMLHttpRequest();
+    const url="/zawieszenie/stabilizatory";
+    xmlhttp.open("POST", url, true);
+    xmlhttp.setRequestHeader("Content-Type", "application/json");
+    xmlhttp.send(JSON.stringify(
+        {
+            "czyStukanieZawieszeniaPodczasJazdyPoNierownosciach": stuka,
+            "czyGumaStabilizatoraZuzyta": zuzyta,
+            "wiadomosc": ""
+        }
+    ));
+
+    xmlhttp.onreadystatechange = function(){
+        if(xmlhttp.status == 200){
+            var object = (xmlhttp.responseText);
+            document.getElementById('containerDiv').style.display = "none";
+            if(object.toString().length < 4){
+                //nie pokazuj nic
+            }else {
+                document.getElementById("containerDiv").innerHTML = object.toString();
+                document.getElementById('containerDiv').style.display = "block";
+
+                //hide after 3s
+                setTimeout(function () {document.getElementById('containerDiv').style.display='none'}, 3000); return false
+            }
+        }else{
+            console.log("nie dziala");
+        }
+    }
+}
+////////////////////////////////////////////////////////////////////////////////
+//wahacze
+function prepareWahaczeJSON(){
+    var tuleje = parseInt(document.querySelector('input[name="0"]:checked').value);
+    var pukanie = parseInt(document.querySelector('input[name="1"]:checked').value);
+    var szarpie = parseInt(document.querySelector('input[name="2"]:checked').value);
+
+    sendWahaczeJSON(tuleje, pukanie, szarpie);
+}
+
+function sendWahaczeJSON(tuleje, pukanie, szarpie) {
+    const xmlhttp = new XMLHttpRequest();
+    const url="/zawieszenie/wahacze";
+    xmlhttp.open("POST", url, true);
+    xmlhttp.setRequestHeader("Content-Type", "application/json");
+    xmlhttp.send(JSON.stringify(
+        {
+            "czyStukaniePodczasjazdyPoNierownosciach": tuleje,
+            "czySzarpaniePrzyRuszaniu": szarpie,
+            "czyPukanieWKolach": pukanie,
+            "wiadomosc": ""
+        }
+    ));
+
+    xmlhttp.onreadystatechange = function(){
+        if(xmlhttp.status == 200){
+            var object = (xmlhttp.responseText);
+            document.getElementById('containerDiv').style.display = "none";
+            if(object.toString().length < 4){
+                //nie pokazuj nic
+            }else {
+                document.getElementById("containerDiv").innerHTML = object.toString();
+                document.getElementById('containerDiv').style.display = "block";
+
+                //hide after 3s
+                setTimeout(function () {document.getElementById('containerDiv').style.display='none'}, 3000); return false
+            }
+        }else{
+            console.log("nie dziala");
+        }
+    }
+}
+

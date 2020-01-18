@@ -635,6 +635,11 @@ rule "wahaczeCzyPukanieWKolach"
         wahacze.setWiadomosc("Zużyty sworzeń wahacza.");
 end
 
+
+
+//dorobic
+
+
 rule "ukladKierowniczyCzySzarpanieWKolachPodczasJazdy"
     when
         ukladKierowniczy: UkladKierowniczy()
