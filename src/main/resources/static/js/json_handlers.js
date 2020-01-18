@@ -398,13 +398,13 @@ function sendTarczeHamulcoweJSON(przegrzewaja) {
     const url="/hamulce/tarcze";
     xmlhttp.open("POST", url, true);
     xmlhttp.setRequestHeader("Content-Type", "application/json");
-    xmlhttp.send(JSON.stringify({
-        "tarczeHamulcowe":{
+    xmlhttp.send(JSON.stringify(
+      {
             "CzySiePrzegrzewaja": przegrzewaja,
             "CzySaUszkodzone": 0,
             "wiadomosc": ""
         }
-    }));
+    ));
 
     xmlhttp.onreadystatechange = function(){
         if(xmlhttp.status == 200){
@@ -489,16 +489,15 @@ function sendOponyJSON(bieznikZuzyty, cisnieniePrawidlowe, przebite, traciSterow
     xmlhttp.open("POST", url, true);
     xmlhttp.setRequestHeader("Content-Type", "application/json");
     xmlhttp.send(JSON.stringify({
-        "opony":{
-            "czyBieznikZuzyty": bieznikZuzyty,
-            "czyCisnieniePrawidlowe": cisnieniePrawidlowe,
-            "czyPrzebite": przebite,
-            "czySamochodTraciSterownosc:": traciSterownosc,
-            "czyDrganiaPodczasJazdy": drgania,
-            "wiadomosc": ""
-        }
-    }));
-
+        "czyBieznikZuzyty": bieznikZuzyty,
+        "czyCisnieniePrawidlowe": cisnieniePrawidlowe,
+        "czyPrzebite": przebite,
+        "czySamochodTraciSterownosc:": traciSterownosc,
+        "czyDrganiaPodczasJazdy": drgania,
+        "wiadomosc": ""
+    }
+    ));
+    console.log("czyBieznikZuzyty bieznikZuzyty");
     xmlhttp.onreadystatechange = function(){
         if(xmlhttp.status == 200){
             var object = (xmlhttp.responseText);
@@ -534,12 +533,12 @@ function sendAutomatycznaJSON(rozlaczanieNapedu, brakBieguWstecznego, brakWysoki
     xmlhttp.open("POST", url, true);
     xmlhttp.setRequestHeader("Content-Type", "application/json");
     xmlhttp.send(JSON.stringify({
-        "automatyczna":{
+
             "wiadomosc": "",
             "czyRozlaczanieNapedu": rozlaczanieNapedu,
             "czyBrakBieguWstecznego": brakBieguWstecznego,
             "czyBrakWysokichBiegow:": brakWysokich,
-        }
+
     }));
 
     xmlhttp.onreadystatechange = function(){
@@ -582,7 +581,7 @@ function sendUkladKierowniczyJSON(szarpanie, luz, drganie, wspomaganiem, wspomag
     xmlhttp.open("POST", url, true);
     xmlhttp.setRequestHeader("Content-Type", "application/json");
     xmlhttp.send(JSON.stringify({
-        "ukladKierowniczy":{
+
             "czySzarpaniePodczasSkrecania": szarpanie,
             "czyLuzWKolachPodczasJazdy": luz,
             "czyDrganieKierownicyPodczasPostoju": drganie,
@@ -592,7 +591,7 @@ function sendUkladKierowniczyJSON(szarpanie, luz, drganie, wspomaganiem, wspomag
             "wyciePompyWTrakcieJazdy": wycie,
             "czyUtrudnioneSkrecanie": utrudnione,
             "czyGwizdyPompyWTrakcieJazdy": gwizdy,
-        }
+
     }));
 
     xmlhttp.onreadystatechange = function(){
@@ -630,12 +629,12 @@ function sendKatalizatorJSON(grzechotanie, problemUruchomienie, przyduszanie) {
     xmlhttp.open("POST", url, true);
     xmlhttp.setRequestHeader("Content-Type", "application/json");
     xmlhttp.send(JSON.stringify({
-        "katalizator":{
+
             "wiadomosc": "",
             "czyGrzechotaniePodczasPracy": grzechotanie,
             "czyProblemyZUruchomieniemSilnika": problemUruchomienie,
             "czyPrzyduszanieSilnika": przyduszanie
-        }
+
     }));
 
     xmlhttp.onreadystatechange = function(){
@@ -671,10 +670,10 @@ function sendKolektorJSON(halas) {
     xmlhttp.open("POST", url, true);
     xmlhttp.setRequestHeader("Content-Type", "application/json");
     xmlhttp.send(JSON.stringify({
-        "kolektor":{
+
             "wiadomosc": "",
             "czyHalasPodczasPracy": halas
-        }
+
     }));
 
     xmlhttp.onreadystatechange = function(){
@@ -711,11 +710,11 @@ function sendSondaLambdaJSON(spadekMocy, wzrostZuzycia) {
     xmlhttp.open("POST", url, true);
     xmlhttp.setRequestHeader("Content-Type", "application/json");
     xmlhttp.send(JSON.stringify({
-        "sondaLambda":{
+
             "wiadomosc": "",
             "czySpadekMocySilnika": spadekMocy,
             "czyWzrostZuzyciaPaliwa": wzrostZuzycia,
-        }
+
     }));
 
     xmlhttp.onreadystatechange = function(){
@@ -753,12 +752,10 @@ function sendWydechJSON(bialy, niebieski, czarny) {
     xmlhttp.open("POST", url, true);
     xmlhttp.setRequestHeader("Content-Type", "application/json");
     xmlhttp.send(JSON.stringify({
-        "wydech":{
             "wiadomosc": "",
             "czyDuzoBialegoDymu": bialy,
             "czyKolorDymuNiebieski": niebieski,
             "czyKolorDymuCzarny": czarny
-        }
     }));
 
     xmlhttp.onreadystatechange = function(){
