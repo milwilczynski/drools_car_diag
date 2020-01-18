@@ -11,26 +11,27 @@
 </head>
 
 <div style="flex-direction: row; font-family: 'Arial Narrow'; width: 100%;">
-    <img style="margin-left: 45%" th:src="@{/img/parts/wahacz.jpg}">
+    <img style="margin-left: 45%" th:src="@{/img/parts/przepustnica.jpg}">
     <ul>
-        <li onclick="prepareWahaczeJSON()" id="c0"> Czy tuleje są zużyte?
+        <li onclick="prepareAmortyzatoryJSON()" id="c0"> przepu
             <br/>
             <input  type="radio" name="0" value="2"> Tak
             <input  type="radio" name="0" value="1"> Nie
             <input  type="radio" name="0" value="0" checked> Nie sprawdzone
         </li>
-        <li onclick="prepareWahaczeJSON()" id="c2"> Czy szarpie przy ruszaniu?
-            <br/>
-            <input  type="radio" name="2" value="2"> Tak
-            <input  type="radio" name="2" value="1"> Nie
-            <input  type="radio" name="2" value="0" checked> Nie sprawdzone
-        </li>
-        <li onclick="prepareWahaczeJSON()" id="c1">
-            Czy słychać pukanie w kołach?
+        <li onclick="prepareAmortyzatoryJSON()" id="c1">
+            Wyciek oleju z amortyzatora?
             <br />
             <input type="radio" name="1"  value="2" onclick=""> Tak
             <input type="radio" name="1" value="1"> Nie
             <input  type="radio" name="1" value="0" checked> Nie sprawdzone
+        </li>
+        <li onclick="prepareAmortyzatoryJSON()" id="c2">
+            Koła odrywają sie od nawierzchni?
+            <br />
+            <input type="radio" name="2"  value="2" onclick=""> Tak
+            <input type="radio" name="2" value="1"> Nie
+            <input  type="radio" name="2" value="0" checked> Nie sprawdzone
         </li>
 
     </ul>

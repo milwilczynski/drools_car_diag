@@ -125,7 +125,7 @@ public class FunController {
         return opony.getWiadomosc();
     }
 
-    @RequestMapping(value = "/skrzynia/automat", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
+    @RequestMapping(value = "/skrzynia/automatyczna", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
     public String checkSkrzyniaAutomat(@RequestBody Automatyczna automatyczna) throws IOException {
         KieSession session;
         DroolConfig dg = new DroolConfig();

@@ -537,7 +537,7 @@ function sendAutomatycznaJSON(rozlaczanieNapedu, brakBieguWstecznego, brakWysoki
             "wiadomosc": "",
             "czyRozlaczanieNapedu": rozlaczanieNapedu,
             "czyBrakBieguWstecznego": brakBieguWstecznego,
-            "czyBrakWysokichBiegow:": brakWysokich,
+            "czyBrakWysokichBiegow": brakWysokich
 
     }));
 
@@ -572,10 +572,10 @@ function prepareUkladKierowniczyJSON(){
     var utrudnione = parseInt(document.querySelector('input[name="6"]:checked').value);
     var gwizdy = parseInt(document.querySelector('input[name="7"]:checked').value);
 
-    sendUkladKierowniczyJSON(szarpanie, luz, drganie, wspomaganiem, wspomaganiev2, wycie, utrudnione, gwizdy);
+    sendUkladKierowniczyJSON(szarpanie, luz, drganie, wspomaganie, wspomaganiev2, wycie, utrudnione, gwizdy);
 }
 
-function sendUkladKierowniczyJSON(szarpanie, luz, drganie, wspomaganiem, wspomaganiev2, wycie, utrudnione, gwizdy) {
+function sendUkladKierowniczyJSON(szarpanie, luz, drganie, wspomaganie, wspomaganiev2, wycie, utrudnione, gwizdy) {
     const xmlhttp = new XMLHttpRequest();
     const url="/ukladkierowniczy";
     xmlhttp.open("POST", url, true);
@@ -585,7 +585,7 @@ function sendUkladKierowniczyJSON(szarpanie, luz, drganie, wspomaganiem, wspomag
             "czySzarpaniePodczasSkrecania": szarpanie,
             "czyLuzWKolachPodczasJazdy": luz,
             "czyDrganieKierownicyPodczasPostoju": drganie,
-            "czyWspomaganieDziala": wspomaganiem,
+            "czyWspomaganieDziala": wspomaganie,
             "wspomaganieRazDzialaRazNie": wspomaganiev2,
             "wiadomosc": "",
             "wyciePompyWTrakcieJazdy": wycie,

@@ -13,11 +13,9 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>droolsCar</name>
 	<description>Drools Car diagnostic</description>
-
 	<properties>
 		<java.version>1.8</java.version>
 		<runtime.version>7.31.0.Final</runtime.version>
-		<start-class>com.drools_car_diag.droolsCar.DroolsCarApplication</start-class>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 	</properties>
@@ -78,7 +76,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
-		<defaultGoal>install</defaultGoal>
+		<defaultGoal>compile</defaultGoal>
 	</build>
 
 </project>

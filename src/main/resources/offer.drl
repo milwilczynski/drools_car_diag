@@ -21,7 +21,11 @@ import com.drools_car_diag.droolsCar.entities.zawieszenie.Amortyzatory;
 import com.drools_car_diag.droolsCar.entities.zawieszenie.GeometriaZawieszenia;
 import com.drools_car_diag.droolsCar.entities.zawieszenie.Stabilizatory;
 import com.drools_car_diag.droolsCar.entities.zawieszenie.Wahacze;
-
+import com.drools_car_diag.droolsCar.entities.silnik.Cewka;
+import com.drools_car_diag.droolsCar.entities.silnik.Przepustnica;
+import com.drools_car_diag.droolsCar.entities.silnik.Turbosprezarka;
+import com.drools_car_diag.droolsCar.entities.silnik.czujniki.CzujnikMasyPowietrza;
+import com.drools_car_diag.droolsCar.entities.silnik.czujniki.CzujnikPolozeniaWaluKorbowego;
 
 
 //migacze
@@ -402,57 +406,97 @@ end
 rule "klockiHamulcoweCzyZuzyte"
     when
         klockiHamulcowe: KlockiHamulcowe()
-        eval(klockiHamulcowe.getCzyZuzyte() == 1)
+        eval(klockiHamulcowe.getCzyZuzyte() == 2)
     then
         klockiHamulcowe.setWiadomosc("Wymien klocki hamulcowe.");
+end
+
+rule "klockiHamulcoweCzyZuzyteOk"
+    when
+        klockiHamulcowe: KlockiHamulcowe()
+        eval(klockiHamulcowe.getCzyZuzyte() == 1)
+    then
+        klockiHamulcowe.setWiadomosc("Wszystko w porządku.");
 end
 
 rule "klockiHamulcoweCzySiePrzegrzewaja"
     when
         klockiHamulcowe: KlockiHamulcowe()
-        eval(klockiHamulcowe.getCzySiePrzegrzewaja() == 1)
+        eval(klockiHamulcowe.getCzySiePrzegrzewaja() == 2)
     then
         klockiHamulcowe.setWiadomosc("Wymien klocki hamulcowe.");
 end
 
-rule "tarczeHamulcoweCzySiePrzegrzewaja()"
+rule "tarczeHamulcoweCzySiePrzegrzewajaOk"
     when
         tarczeHamulcowe: TarczeHamulcowe()
         eval(tarczeHamulcowe.getCzySiePrzegrzewaja() == 1)
     then
-        tarczeHamulcowe.setWiadomosc("Wymien tarcze hamulcowe.");
-end
+        tarczeHamulcowe.setWiadomosc("Wszystko w porządku.");
+   end
 
 rule "tarczeHamulcoweCzySaUszkodzone"
     when
         tarczeHamulcowe: TarczeHamulcowe()
-        eval(tarczeHamulcowe.getCzySaUszkodzone() == 1)
+        eval(tarczeHamulcowe.getCzySaUszkodzone() == 2)
     then
         tarczeHamulcowe.setWiadomosc("Tarcze hamulcowe sa uszkodzone, wymien je.");
+end
+
+rule "tarczeHamulcoweCzySaUszkodzoneOk"
+    when
+        tarczeHamulcowe: TarczeHamulcowe()
+        eval(tarczeHamulcowe.getCzySaUszkodzone() == 1)
+    then
+        tarczeHamulcowe.setWiadomosc("Wszystko w porządku.");
 end
 
 rule "pompaHamulcowaCzyJestPlynHamulcowy"
     when
         pompaHamulcowa: PompaHamulcowa()
-        eval(pompaHamulcowa.getCzyJestPlynHamulcowy() == 1)
+        eval(pompaHamulcowa.getCzyJestPlynHamulcowy() == 2)
     then
         pompaHamulcowa.setWiadomosc("Uzupelnij plyn hamulcowy.");
+end
+
+rule "pompaHamulcowaCzyJestPlynHamulcowyOk"
+    when
+        pompaHamulcowa: PompaHamulcowa()
+        eval(pompaHamulcowa.getCzyJestPlynHamulcowy() == 1)
+    then
+        pompaHamulcowa.setWiadomosc("Wszystko w porządku.");
 end
 
 rule "pompaHamulcowaCzyJestOdpowiedniaIloscWodyWPlynieHamulcowym"
     when
         pompaHamulcowa: PompaHamulcowa()
-        eval(pompaHamulcowa.getIloscWodyWplynieHamulcowym() == 1)
+        eval(pompaHamulcowa.getIloscWodyWplynieHamulcowym() == 2)
     then
         pompaHamulcowa.setWiadomosc("Za duza ilosc wody w plynie hamulcowym. Wymien plyn.");
+end
+
+rule "pompaHamulcowaCzyJestOdpowiedniaIloscWodyWPlynieHamulcowymOk"
+    when
+        pompaHamulcowa: PompaHamulcowa()
+        eval(pompaHamulcowa.getIloscWodyWplynieHamulcowym() == 1)
+    then
+        pompaHamulcowa.setWiadomosc("Wszystko w porządku.");
 end
 
 rule "pompaHamulcowaCzyCisinienieJestOdpowiednie"
     when
         pompaHamulcowa: PompaHamulcowa()
-        eval(pompaHamulcowa.getCzyJestOdpowiednieCisnienie() == 1)
+        eval(pompaHamulcowa.getCzyJestOdpowiednieCisnienie() == 2)
     then
         pompaHamulcowa.setWiadomosc("Wyreguluj cisnienie w pompie hamulcowej.");
+end
+
+rule "pompaHamulcowaCzyCisinienieJestOdpowiednieOk"
+    when
+        pompaHamulcowa: PompaHamulcowa()
+        eval(pompaHamulcowa.getCzyJestOdpowiednieCisnienie() == 1)
+    then
+        pompaHamulcowa.setWiadomosc("Wszystko w porządku.");
 end
 
 //ponizej do poprawy ??
@@ -461,42 +505,118 @@ rule "tarczeHamulcoweUszkodzonePrzezKlocki"
     when
         tarczeHamulcowe: TarczeHamulcowe()
         klockiHamulcowe: KlockiHamulcowe()
-        eval(tarczeHamulcowe.getCzySaUszkodzone() == 1 && klockiHamulcowe.getCzySiePrzegrzewaja() == 1)
+        eval(tarczeHamulcowe.getCzySaUszkodzone() == 2 && klockiHamulcowe.getCzySiePrzegrzewaja() == 2)
     then
         tarczeHamulcowe.setWiadomosc("Zbyt duzy nacisk klockow powoduje uszkadzanie tarcz hamulcowych. Udaj sie do mechanika.");
+end
+
+rule "tarczeHamulcoweUszkodzonePrzezKlockiOk"
+    when
+        tarczeHamulcowe: TarczeHamulcowe()
+        klockiHamulcowe: KlockiHamulcowe()
+        eval(tarczeHamulcowe.getCzySaUszkodzone() == 1 && klockiHamulcowe.getCzySiePrzegrzewaja() == 1)
+    then
+        tarczeHamulcowe.setWiadomosc("Wszystko w porządku.");
+end
+
+rule "tarczeHamulcowePrzegrzewaja"
+    when
+        tarczeHamulcowe: TarczeHamulcowe()
+        eval(tarczeHamulcowe.getCzySiePrzegrzewaja() == 2)
+    then
+        tarczeHamulcowe.setWiadomosc("Wymien tarcze hamulcowe.");
+end
+
+rule "tarczeHamulcowePrzegrzewajaOk"
+    when
+        tarczeHamulcowe: TarczeHamulcowe()
+        eval(tarczeHamulcowe.getCzySiePrzegrzewaja() == 1)
+    then
+        tarczeHamulcowe.setWiadomosc("Wszystko w porządku.");
 end
 
 rule "tloczkiHamulcoweCzyZabrudzone"
     when
         tloczkiHamulcowe: TloczkiHamulcowe()
-        eval(tloczkiHamulcowe.getCzyZabrudzone() == 1)
+        eval(tloczkiHamulcowe.getCzyZabrudzone() == 2)
     then
         tloczkiHamulcowe.setWiadomosc("Wyczysc tloczki hamulcowe.");
+end
+
+rule "tloczkiHamulcoweCzyZabrudzoneOk"
+    when
+        tloczkiHamulcowe: TloczkiHamulcowe()
+        eval(tloczkiHamulcowe.getCzyZabrudzone() == 1)
+    then
+        tloczkiHamulcowe.setWiadomosc("Wszystko w porządku.");
 end
 
 rule "tloczkiHamulcoweCzySkorodowane"
     when
         tloczkiHamulcowe: TloczkiHamulcowe()
-        eval(tloczkiHamulcowe.getCzySkorodowane() == 1)
+        eval(tloczkiHamulcowe.getCzySkorodowane() == 2)
     then
         tloczkiHamulcowe.setWiadomosc("Wymien tloczki hamulcowe.");
+end
+
+rule "tloczkiHamulcoweCzySkorodowaneOk"
+    when
+        tloczkiHamulcowe: TloczkiHamulcowe()
+        eval(tloczkiHamulcowe.getCzySkorodowane() == 1)
+    then
+        tloczkiHamulcowe.setWiadomosc("Wszystko w porządku.");
 end
 
 rule "tloczkiHamulcoweCzyKolaSieBlokuja"
     when
         tloczkiHamulcowe: TloczkiHamulcowe()
-        eval(tloczkiHamulcowe.getCzyKolaSieBlokuja() == 1)
+        eval(tloczkiHamulcowe.getCzyKolaSieBlokuja() == 2)
     then
         tloczkiHamulcowe.setWiadomosc("Prowadnice zacisku hamulcowego blokuja kola.");
+end
+
+rule "tloczkiHamulcoweCzyKolaSieBlokujaOk"
+    when
+        tloczkiHamulcowe: TloczkiHamulcowe()
+        eval(tloczkiHamulcowe.getCzyKolaSieBlokuja() == 1)
+    then
+        tloczkiHamulcowe.setWiadomosc("Wszystko w porządku.");
 end
 
 rule "tloczkiHamulcoweCzyKolaSieBlokujaCzyZabrudzone"
     when
         tloczkiHamulcowe: TloczkiHamulcowe()
+        eval(tloczkiHamulcowe.getCzyKolaSieBlokuja() == 2)
+        eval(tloczkiHamulcowe.getCzyZabrudzone() == 2)
+    then
+        tloczkiHamulcowe.setWiadomosc("Zabrudzone tloczki powoduja blokowanie sie kol.");
+end
+
+rule "tloczkiHamulcoweCzyKolaSieBlokujaCzyZabrudzone1/2OK"
+    when
+        tloczkiHamulcowe: TloczkiHamulcowe()
+        eval(tloczkiHamulcowe.getCzyKolaSieBlokuja() == 1)
+        eval(tloczkiHamulcowe.getCzyZabrudzone() == 2)
+    then
+        tloczkiHamulcowe.setWiadomosc("Wyczyść tłoczki hamulcowe.");
+end
+
+rule "tloczkiHamulcoweCzyKolaSieBlokujaCzyZabrudzone1/4OK"
+    when
+        tloczkiHamulcowe: TloczkiHamulcowe()
+        eval(tloczkiHamulcowe.getCzyKolaSieBlokuja() == 2)
+        eval(tloczkiHamulcowe.getCzyZabrudzone() == 1)
+    then
+        tloczkiHamulcowe.setWiadomosc("Uszkodzona gumka osłonowa prowadników.");
+end
+
+rule "tloczkiHamulcoweCzyKolaSieBlokujaCzyZabrudzoneOk"
+    when
+        tloczkiHamulcowe: TloczkiHamulcowe()
         eval(tloczkiHamulcowe.getCzyKolaSieBlokuja() == 1)
         eval(tloczkiHamulcowe.getCzyZabrudzone() == 1)
     then
-        tloczkiHamulcowe.setWiadomosc("Zabrudzone tloczki powoduja blokowanie sie kol.");
+        tloczkiHamulcowe.setWiadomosc("Wszystko w porządku.");
 end
 
 //opony
@@ -504,41 +624,81 @@ end
 rule "oponyCzyBieznikZuzyty"
     when
         opony: Opony()
-        eval(opony.getCzyBieznikZuzyty() == 1)
+        eval(opony.getCzyBieznikZuzyty() == 2)
     then
         opony.setWiadomosc("Wymien opony.");
+end
+
+rule "oponyCzyBieznikZuzytyOk"
+    when
+        opony: Opony()
+        eval(opony.getCzyBieznikZuzyty() == 1)
+    then
+        opony.setWiadomosc("Wszystko w porządku.");
 end
 
 rule "oponyCzyCisnieniePrawidlowe"
     when
         opony: Opony()
-        eval(opony.getCzyCisnieniePrawidlowe() == 1)
+        eval(opony.getCzyCisnieniePrawidlowe() == 2)
     then
         opony.setWiadomosc("Wyreguluj cisnienie w oponach.");
+end
+
+rule "oponyCzyCisnieniePrawidloweOk"
+    when
+        opony: Opony()
+        eval(opony.getCzyCisnieniePrawidlowe() == 1)
+    then
+        opony.setWiadomosc("Wszystko w porządku.");
 end
 
 rule "oponyCzyPrzebite"
     when
         opony: Opony()
-        eval(opony.getCzyPrzebite() == 1)
+        eval(opony.getCzyPrzebite() == 2)
     then
         opony.setWiadomosc("Wymien opone/opony.");
+end
+
+rule "oponyCzyPrzebiteOk"
+    when
+        opony: Opony()
+        eval(opony.getCzyPrzebite() == 1)
+    then
+        opony.setWiadomosc("Wszystko w porządku.");
 end
 
 rule "oponyCzySamochodTraciSterownosc"
     when
         opony: Opony()
-        eval(opony.getCzySamochodTraciSterownosc() == 1)
+        eval(opony.getCzySamochodTraciSterownosc() == 2)
     then
         opony.setWiadomosc("Niepoprawny montaz opon.");
+end
+
+rule "oponyCzySamochodTraciSterownoscOk"
+    when
+        opony: Opony()
+        eval(opony.getCzySamochodTraciSterownosc() == 1)
+    then
+        opony.setWiadomosc("Wszystko w porządku.");
 end
 
 rule "oponyCzyDrganiePodczasJazdy"
     when
         opony: Opony()
-        eval(opony.getCzyDrganiaPodczasJazdy() == 1)
+        eval(opony.getCzyDrganiaPodczasJazdy() == 2)
     then
         opony.setWiadomosc("Niewyważone koła.");
+end
+
+rule "oponyCzyDrganiePodczasJazdyOk"
+    when
+        opony: Opony()
+        eval(opony.getCzyDrganiaPodczasJazdy() == 1)
+    then
+        opony.setWiadomosc("Wszystko w porządku.");
 end
 
 //amortyzatory
@@ -546,25 +706,49 @@ end
 rule "amortyzatoryWydluzonaDrogaHamowania"
     when
         amortyzatory: Amortyzatory()
-        eval(amortyzatory.getWydluzonaDrogaHamowania() == 1)
+        eval(amortyzatory.getWydluzonaDrogaHamowania() == 2)
     then
         amortyzatory.setWiadomosc("Uszkodzone amortyzatory.");
+end
+
+rule "amortyzatoryWydluzonaDrogaHamowaniaOk"
+    when
+        amortyzatory: Amortyzatory()
+        eval(amortyzatory.getWydluzonaDrogaHamowania() == 1)
+    then
+        amortyzatory.setWiadomosc("Wszystko w porządku.");
 end
 
 rule "amortyzatoryWyciekOlejuZAmortyzatora"
     when
         amortyzatory: Amortyzatory()
-        eval(amortyzatory.getWyciekOlejuZAmortyzatora() == 1)
+        eval(amortyzatory.getWyciekOlejuZAmortyzatora() == 2)
     then
         amortyzatory.setWiadomosc("Uszkodony amortyzator.");
+end
+
+rule "amortyzatoryWyciekOlejuZAmortyzatoraOk"
+    when
+        amortyzatory: Amortyzatory()
+        eval(amortyzatory.getWyciekOlejuZAmortyzatora() == 1)
+    then
+        amortyzatory.setWiadomosc("Wszystko w porządku.");
 end
 
 rule "amortyzatoryOdrywajaceSieKolaOdNawierzchni"
     when
         amortyzatory: Amortyzatory()
-        eval(amortyzatory.getOdrywajaceSieKolaOdNawierzchni() == 1)
+        eval(amortyzatory.getOdrywajaceSieKolaOdNawierzchni() == 2)
     then
         amortyzatory.setWiadomosc("Uszkodzone amortyzatory.");
+end
+
+rule "amortyzatoryOdrywajaceSieKolaOdNawierzchniOk"
+    when
+        amortyzatory: Amortyzatory()
+        eval(amortyzatory.getOdrywajaceSieKolaOdNawierzchni() == 1)
+    then
+        amortyzatory.setWiadomosc("Wszystko w porządku.");
 end
 
 //geometria zawieszenia
@@ -572,25 +756,49 @@ end
 rule "geometeriaSamoistneSkrecaniePojazdu"
     when
         geometriaZawieszenia: GeometriaZawieszenia()
-        eval(geometriaZawieszenia.getSamoistneSkrecaniePojazdu() == 1)
+        eval(geometriaZawieszenia.getSamoistneSkrecaniePojazdu() == 2)
     then
         geometriaZawieszenia.setWiadomosc("Niepoprawna geometria zawieszenia. Udaj sie do mechanika.");
+end
+
+rule "geometeriaSamoistneSkrecaniePojazduOk"
+    when
+        geometriaZawieszenia: GeometriaZawieszenia()
+        eval(geometriaZawieszenia.getSamoistneSkrecaniePojazdu() == 1)
+    then
+        geometriaZawieszenia.setWiadomosc("Wszystko w porządku.");
 end
 
 rule "geometriaOdpowiedniaZbieznoscKol"
     when
         geometriaZawieszenia: GeometriaZawieszenia()
-        eval(geometriaZawieszenia.getOdpowiedniaZbieznoscKol() == 1)
+        eval(geometriaZawieszenia.getOdpowiedniaZbieznoscKol() == 2)
     then
         geometriaZawieszenia.setWiadomosc("Niepoprawna geometria zawieszenia. Udaj sie do mechanika.");
+end
+
+rule "geometriaOdpowiedniaZbieznoscKolOk"
+    when
+        geometriaZawieszenia: GeometriaZawieszenia()
+        eval(geometriaZawieszenia.getOdpowiedniaZbieznoscKol() == 1)
+    then
+        geometriaZawieszenia.setWiadomosc("Wszystko w porządku.");
 end
 
 rule "geometriaKatPochyleniaKol"
     when
         geometriaZawieszenia: GeometriaZawieszenia()
-        eval(geometriaZawieszenia.getKatPochyleniaKol() == 1)
+        eval(geometriaZawieszenia.getKatPochyleniaKol() == 2)
     then
         geometriaZawieszenia.setWiadomosc("Niepoprawna geometria zawieszenia. Udaj sie do mechanika.");
+end
+
+rule "geometriaKatPochyleniaKolOk"
+    when
+        geometriaZawieszenia: GeometriaZawieszenia()
+        eval(geometriaZawieszenia.getKatPochyleniaKol() == 1)
+    then
+        geometriaZawieszenia.setWiadomosc("Wszystko w porządku.");
 end
 
 //56
@@ -598,94 +806,193 @@ end
 rule "geometeriaCzyPiskOponPodczasSkrecania"
     when
         geometriaZawieszenia: GeometriaZawieszenia()
-        eval(geometriaZawieszenia.getCzyPiskOponPodczasSkrecania() == 1)
+        eval(geometriaZawieszenia.getCzyPiskOponPodczasSkrecania() == 2)
     then
         geometriaZawieszenia.setWiadomosc("Źle ustawiona geometria zawieszenia.");
+end
+
+rule "geometeriaCzyPiskOponPodczasSkrecaniaOk"
+    when
+        geometriaZawieszenia: GeometriaZawieszenia()
+        eval(geometriaZawieszenia.getCzyPiskOponPodczasSkrecania() == 1)
+    then
+        geometriaZawieszenia.setWiadomosc("Wszystko w porządku.");
 end
 
 rule "stabilizatoryCzyStukanieZawieszeniaPodczasJazdyPoNierownosciach"
     when
         stabilizatory: Stabilizatory()
-        eval(stabilizatory.getCzyStukanieZawieszeniaPodczasJazdyPoNierownosciach() == 1)
+        eval(stabilizatory.getCzyStukanieZawieszeniaPodczasJazdyPoNierownosciach() == 2)
     then
         stabilizatory.setWiadomosc("Uszkodzony lub poluzowany łącznik stabilizatora.");
+end
+
+rule "stabilizatoryCzyStukanieZawieszeniaPodczasJazdyPoNierownosciachOk"
+    when
+        stabilizatory: Stabilizatory()
+        eval(stabilizatory.getCzyStukanieZawieszeniaPodczasJazdyPoNierownosciach() == 1)
+    then
+        stabilizatory.setWiadomosc("Wszystko w porządku.");
 end
 
 rule "stabilizatoryCzyGumaStabilizatoraZuzyta"
     when
         stabilizatory: Stabilizatory()
-        eval(stabilizatory.getCzyGumaStabilizatoraZuzyta() == 1)
+        eval(stabilizatory.getCzyGumaStabilizatoraZuzyta() == 2)
     then
         stabilizatory.setWiadomosc("Wymien gume stabilizatora.");
+end
+
+rule "stabilizatoryCzyGumaStabilizatoraZuzytaOk"
+    when
+        stabilizatory: Stabilizatory()
+        eval(stabilizatory.getCzyGumaStabilizatoraZuzyta() == 1)
+    then
+        stabilizatory.setWiadomosc("Wszystko w porządku.");
 end
 
 rule "wahaczeCzyTulejeZuzyte"
     when
         wahacze: Wahacze()
-        eval(wahacze.getCzyStukaniePodczasjazdyPoNierownosciach() == 1 && wahacze.getCzySzarpaniePrzyRuszaniu() == 1)
+        eval(wahacze.getCzyStukaniePodczasjazdyPoNierownosciach() == 2 && wahacze.getCzySzarpaniePrzyRuszaniu() == 2)
     then
         wahacze.setWiadomosc("Zużyte tuleje wahacza.");
+end
+
+rule "wahaczeCzyTulejeZuzyteOk"
+    when
+        wahacze: Wahacze()
+        eval(wahacze.getCzyStukaniePodczasjazdyPoNierownosciach() == 1 && wahacze.getCzySzarpaniePrzyRuszaniu() == 1)
+    then
+        wahacze.setWiadomosc("Wszystko w porządku.");
+end
+
+rule "wahaczeCzyTulejeZuzyte1/2Ok"
+    when
+        wahacze: Wahacze()
+        eval(wahacze.getCzyStukaniePodczasjazdyPoNierownosciach() == 2 && wahacze.getCzySzarpaniePrzyRuszaniu() == 1)
+    then
+        wahacze.setWiadomosc("Uszkodzone wahacze.");
+end
+
+rule "wahaczeCzyTulejeZuzyte1/4Ok"
+    when
+        wahacze: Wahacze()
+        eval(wahacze.getCzyStukaniePodczasjazdyPoNierownosciach() == 1 && wahacze.getCzySzarpaniePrzyRuszaniu() == 2)
+    then
+        wahacze.setWiadomosc("Usterka sprzęgła.");
 end
 
 rule "wahaczeCzyPukanieWKolach"
     when
         wahacze: Wahacze()
-        eval(wahacze.getCzyPukanieWKolach() == 1)
+        eval(wahacze.getCzyPukanieWKolach() == 2)
     then
         wahacze.setWiadomosc("Zużyty sworzeń wahacza.");
 end
 
-
-
-//dorobic
-
+rule "wahaczeCzyPukanieWKolachOk"
+    when
+        wahacze: Wahacze()
+        eval(wahacze.getCzyPukanieWKolach() == 1)
+    then
+        wahacze.setWiadomosc("Wszystko w porządku.");
+end
 
 rule "ukladKierowniczyCzySzarpanieWKolachPodczasJazdy"
     when
         ukladKierowniczy: UkladKierowniczy()
-        eval(ukladKierowniczy.getCzySzarpaniePodczasSkrecania() == 1)
+        eval(ukladKierowniczy.getCzySzarpaniePodczasSkrecania() == 2)
     then
         ukladKierowniczy.setWiadomosc("Zapowietrzenie układu kierowniczego. Sprawdź także pompę wspomagania.");
+end
+
+rule "ukladKierowniczyCzySzarpanieWKolachPodczasJazdyOk"
+    when
+        ukladKierowniczy: UkladKierowniczy()
+        eval(ukladKierowniczy.getCzySzarpaniePodczasSkrecania() == 1)
+    then
+        ukladKierowniczy.setWiadomosc("Wszystko w porządku.");
 end
 
 rule "ukladKierowniczyCzyLuzWKolachPodczasJazdy"
     when
         ukladKierowniczy: UkladKierowniczy()
-        eval(ukladKierowniczy.getCzyLuzWKolachPodczasJazdy() == 1)
+        eval(ukladKierowniczy.getCzyLuzWKolachPodczasJazdy() == 2)
     then
         ukladKierowniczy.setWiadomosc("Wyrobione końcówki drążków kierowniczych.");
+end
+
+rule "ukladKierowniczyCzyLuzWKolachPodczasJazdyOk"
+    when
+        ukladKierowniczy: UkladKierowniczy()
+        eval(ukladKierowniczy.getCzyLuzWKolachPodczasJazdy() == 1)
+    then
+        ukladKierowniczy.setWiadomosc("Wszystko w porządku.");
 end
 
 rule "ukladKierowniczyCzyDrganieKierownicyPodczasPostoju"
     when
         ukladKierowniczy: UkladKierowniczy()
-        eval(ukladKierowniczy.getCzyDrganieKierownicyPodczasPostoju() == 1)
+        eval(ukladKierowniczy.getCzyDrganieKierownicyPodczasPostoju() == 2)
     then
         ukladKierowniczy.setWiadomosc("Zapowietrzony układ wspomagania.");
+end
+
+rule "ukladKierowniczyCzyDrganieKierownicyPodczasPostojuOk"
+    when
+        ukladKierowniczy: UkladKierowniczy()
+        eval(ukladKierowniczy.getCzyDrganieKierownicyPodczasPostoju() == 1)
+    then
+        ukladKierowniczy.setWiadomosc("Wszystko w porządku.");
 end
 
 rule "ukladKierowniczyCzyWspomaganieDziala"
     when
         ukladKierowniczy: UkladKierowniczy()
-        eval(ukladKierowniczy.getCzyWspomaganieDziala() == 1)
+        eval(ukladKierowniczy.getCzyWspomaganieDziala() == 2)
     then
         ukladKierowniczy.setWiadomosc("Przepalony bezpiecznik w urządzeniu sterującym.");
+end
+
+rule "ukladKierowniczyCzyWspomaganieDzialaOk"
+    when
+        ukladKierowniczy: UkladKierowniczy()
+        eval(ukladKierowniczy.getCzyWspomaganieDziala() == 1)
+    then
+        ukladKierowniczy.setWiadomosc("Wszystko w porządku.");
 end
 
 rule "ukladKierowniczyWspomaganieRazDzialaRazNie"
     when
         ukladKierowniczy: UkladKierowniczy()
-        eval(ukladKierowniczy.getWspomaganieRazDzialaRazNie() == 1)
+        eval(ukladKierowniczy.getWspomaganieRazDzialaRazNie() == 2)
     then
         ukladKierowniczy.setWiadomosc("Uszkodzona instalacja elektryczna.");
+end
+
+rule "ukladKierowniczyWspomaganieRazDzialaRazNieOk"
+    when
+        ukladKierowniczy: UkladKierowniczy()
+        eval(ukladKierowniczy.getWspomaganieRazDzialaRazNie() == 1)
+    then
+        ukladKierowniczy.setWiadomosc("Wszystko w porządku.");
 end
 
 rule "ukladKierowniczyWyciePompyWTrakcieJazdy"
     when
         ukladKierowniczy: UkladKierowniczy()
-        eval(ukladKierowniczy.getWyciePompyWTrakcieJazdy() == 1)
+        eval(ukladKierowniczy.getWyciePompyWTrakcieJazdy() == 2)
     then
         ukladKierowniczy.setWiadomosc("Zbyt mała ilość płynu w pompie, może dojść do zatarcia.");
+end
+
+rule "ukladKierowniczyWyciePompyWTrakcieJazdyOk"
+    when
+        ukladKierowniczy: UkladKierowniczy()
+        eval(ukladKierowniczy.getWyciePompyWTrakcieJazdy() == 1)
+    then
+        ukladKierowniczy.setWiadomosc("Wszystko w porządku.");
 end
 
 //67
@@ -693,17 +1000,33 @@ end
 rule "ukladKierowniczyCzyUtrudnioneSkrecanie"
     when
         ukladKierowniczy: UkladKierowniczy()
-        eval(ukladKierowniczy.getCzyUtrudnioneSkrecanie() == 1)
+        eval(ukladKierowniczy.getCzyUtrudnioneSkrecanie() == 2)
     then
         ukladKierowniczy.setWiadomosc("Pompa generuje zbyt niskie ciśnienie płynu.");
+end
+
+rule "ukladKierowniczyCzyUtrudnioneSkrecanieOk"
+    when
+        ukladKierowniczy: UkladKierowniczy()
+        eval(ukladKierowniczy.getCzyUtrudnioneSkrecanie() == 1)
+    then
+        ukladKierowniczy.setWiadomosc("Wszystko w porządku.");
 end
 
 rule "ukladKierowniczyCzyGwizdyPompyWTrakcieJazdy"
     when
         ukladKierowniczy: UkladKierowniczy()
-        eval(ukladKierowniczy.getCzyGwizdyPompyWTrakcieJazdy() == 1)
+        eval(ukladKierowniczy.getCzyGwizdyPompyWTrakcieJazdy() == 2)
     then
         ukladKierowniczy.setWiadomosc("Pompa zasysa powietrze, zbyt mała ilość płynu.");
+end
+
+rule "ukladKierowniczyCzyGwizdyPompyWTrakcieJazdyOk"
+    when
+        ukladKierowniczy: UkladKierowniczy()
+        eval(ukladKierowniczy.getCzyGwizdyPompyWTrakcieJazdy() == 1)
+    then
+        ukladKierowniczy.setWiadomosc("Wszystko w porządku.");
 end
 
 //wydech
@@ -711,71 +1034,201 @@ end
 rule "wydechCzyDuzoBialegoDymu"
     when
         wydech: Wydech()
-        eval(wydech.getCzyDuzoBialegoDymu() == 1)
+        eval(wydech.getCzyDuzoBialegoDymu() == 2)
     then
         wydech.setWiadomosc("Skontroluj poziom płynu w zbiorniku wyrównawczym. Jeśli jego stan jest niski - przeciek w komorze spalania.");
+end
+
+rule "wydechCzyDuzoBialegoDymuOk"
+    when
+        wydech: Wydech()
+        eval(wydech.getCzyDuzoBialegoDymu() == 1)
+    then
+        wydech.setWiadomosc("Wszystko w porządku.");
 end
 
 rule "wydechCzyKolorDymuNiebieski"
     when
         wydech: Wydech()
-        eval(wydech.getCzyKolorDymuNiebieski() == 1)
+        eval(wydech.getCzyKolorDymuNiebieski() == 2)
     then
         wydech.setWiadomosc("Mocne zużycie lub uszkodzenie silnika.");
+end
+
+rule "wydechCzyKolorDymuNiebieskiOk"
+    when
+        wydech: Wydech()
+        eval(wydech.getCzyKolorDymuNiebieski() == 1)
+    then
+        wydech.setWiadomosc("Wszystko w porządku.");
 end
 
 rule "wydechCzyKolorDymuCzarny"
     when
         wydech: Wydech()
-        eval(wydech.getCzyKolorDymuCzarny() == 1)
+        eval(wydech.getCzyKolorDymuCzarny() == 2)
     then
         wydech.setWiadomosc("Awaria elementów układu wtryskowego - wymagana wizyta w specjalistycznym warsztacie.");
+end
+
+rule "wydechCzyKolorDymuCzarnyOk"
+    when
+        wydech: Wydech()
+        eval(wydech.getCzyKolorDymuCzarny() == 1)
+    then
+        wydech.setWiadomosc("Wszystko w porządku.");
 end
 
 rule "wydechCzyGrzechotaniePodczasPracy"
     when
         katalizator: Katalizator()
-        eval(katalizator.getCzyGrzechotaniePodczasPracy() == 1)
+        eval(katalizator.getCzyGrzechotaniePodczasPracy() == 2)
     then
         katalizator.setWiadomosc("Uszkodzony/pęknięty katalizator, zalecana wymiana.");
 end
 
+rule "wydechCzyGrzechotaniePodczasPracyOk"
+    when
+        katalizator: Katalizator()
+        eval(katalizator.getCzyGrzechotaniePodczasPracy() == 1)
+    then
+        katalizator.setWiadomosc("Wszystko w porządku.");
+   end
+
 rule "wydechCzyProblemyZUruchomieniemSilnika"
+    when
+        katalizator: Katalizator()
+        eval(katalizator.getCzyProblemyZUruchomieniemSilnika() == 2)
+    then
+        katalizator.setWiadomosc("Zapchany katalizator.");
+end
+
+rule "wydechCzyProblemyZUruchomieniemSilnikaOk"
     when
         katalizator: Katalizator()
         eval(katalizator.getCzyProblemyZUruchomieniemSilnika() == 1)
     then
-        katalizator.setWiadomosc("Zapchany katalizator.");
+        katalizator.setWiadomosc("Wszystko w porządku.");
 end
 
 rule "wydechCzyPrzyduszanieSilnika"
     when
         katalizator: Katalizator()
-        eval(katalizator.getCzyPrzyduszanieSilnika() == 1)
+        eval(katalizator.getCzyPrzyduszanieSilnika() == 2)
     then
         katalizator.setWiadomosc("Zapchany katalizator.");
+end
+
+rule "wydechCzyPrzyduszanieSilnikaOk"
+    when
+        katalizator: Katalizator()
+        eval(katalizator.getCzyPrzyduszanieSilnika() == 1)
+    then
+        katalizator.setWiadomosc("Wszystko w porządku.");
 end
 
 rule "wydechCzyHalasPodczasPracy"
     when
         kolektor: Kolektor()
-        eval(kolektor.getCzyHalasPodczasPracy() == 1)
+        eval(kolektor.getCzyHalasPodczasPracy() == 2)
     then
         kolektor.setWiadomosc("Pęknięty kolektor. Zalecana wymiana.");
+end
+
+rule "wydechCzyHalasPodczasPracyOk"
+    when
+        kolektor: Kolektor()
+        eval(kolektor.getCzyHalasPodczasPracy() == 1)
+    then
+        kolektor.setWiadomosc("Wszystko w porządku.");
 end
 
 rule "wydechCzySondaUszkodzona"
     when
         sondaLambda: SondaLambda()
-        eval(sondaLambda.getCzySpadekMocySilnika() == 1 && sondaLambda.getCzyWzrostZuzyciaPaliwa() == 1)
+        eval(sondaLambda.getCzySpadekMocySilnika() == 2 && sondaLambda.getCzyWzrostZuzyciaPaliwa() == 2)
     then
         sondaLambda.setWiadomosc("Awaria sondy lambda.");
+end
+
+rule "wydechCzySondaUszkodzonaOk"
+    when
+        sondaLambda: SondaLambda()
+        eval(sondaLambda.getCzySpadekMocySilnika() == 1 && sondaLambda.getCzyWzrostZuzyciaPaliwa() == 1)
+    then
+        sondaLambda.setWiadomosc("Wszystko w porządku.");
+end
+
+rule "wydechCzySondaUszkodzona1/2Ok"
+    when
+        sondaLambda: SondaLambda()
+        eval(sondaLambda.getCzySpadekMocySilnika() == 2 && sondaLambda.getCzyWzrostZuzyciaPaliwa() == 1)
+    then
+        sondaLambda.setWiadomosc("Niedrożny przewód paliwowy.");
+end
+
+rule "wydechCzySondaUszkodzona1/4Ok"
+    when
+        sondaLambda: SondaLambda()
+        eval(sondaLambda.getCzySpadekMocySilnika() == 1 && sondaLambda.getCzyWzrostZuzyciaPaliwa() == 2)
+    then
+        sondaLambda.setWiadomosc("Awaria pompy paliwa.");
 end
 
 //77
 //skrzynia biegów
 
-rule "automatycznaCzyRozlaczanieNapedu"
+rule "automatycznaCzyRozlaczanieNapedAwaria"
+    when
+        automatyczna: Automatyczna()
+        eval(automatyczna.getCzyRozlaczanieNapedu() == 2)
+    then
+        automatyczna.setWiadomosc("Awaria elektroniki sterującej.");
+end
+
+rule "automatycznaCzyRozlaczanieNapeduOk"
+    when
+        automatyczna: Automatyczna()
+        eval(automatyczna.getCzyRozlaczanieNapedu() == 1)
+    then
+        automatyczna.setWiadomosc("Wszystko w porządku.");
+end
+
+rule "automatycznaCzyBrakBieguWstecznegoJechowy"
+    when
+        automatyczna: Automatyczna()
+        eval(automatyczna.getCzyBrakBieguWstecznego() == 2)
+    then
+        automatyczna.setWiadomosc("Awaria kosza skrzyni.");
+end
+
+rule "automatycznaCzyBrakBieguWstecznegoOk"
+    when
+        automatyczna: Automatyczna()
+        eval(automatyczna.getCzyBrakBieguWstecznego() == 1)
+    then
+        automatyczna.setWiadomosc("Wszystko w porządku.");
+end
+
+rule "automatycznaCzyBrakWysokichBiegow"
+    when
+        automatyczna: Automatyczna()
+        eval(automatyczna.getCzyBrakWysokichBiegow() == 2)
+    then
+        automatyczna.setWiadomosc("Awaria bloku hydrauliki skrzyni.");
+end
+
+rule "automatycznaCzyBrakWysokichBiegowOk"
+    when
+        automatyczna: Automatyczna()
+        eval(automatyczna.getCzyBrakWysokichBiegow() == 1)
+    then
+        automatyczna.setWiadomosc("Wszystko w porządku.");
+end
+//77
+//skrzynia biegów
+
+rule "automatycznaCzyRozlaczanieNapedukSiemandero"
     when
         automatyczna: Automatyczna()
         eval(automatyczna.getCzyRozlaczanieNapedu() == 1)
@@ -783,7 +1236,7 @@ rule "automatycznaCzyRozlaczanieNapedu"
         automatyczna.setWiadomosc("Awaria elektroniki sterującej.");
 end
 
-rule "automatycznaCzyBrakBieguWstecznego"
+rule "automatycznaCzyBrakBieguWstecznegoSiema"
     when
         automatyczna: Automatyczna()
         eval(automatyczna.getCzyBrakBieguWstecznego() == 1)
@@ -791,10 +1244,226 @@ rule "automatycznaCzyBrakBieguWstecznego"
         automatyczna.setWiadomosc("Awaria kosza skrzyni.");
 end
 
-rule "automatycznaCzyBrakWysokichBiegow"
+rule "automatycznaCzyBrakWysokichBiegowAwerunia"
     when
         automatyczna: Automatyczna()
         eval(automatyczna.getCzyBrakWysokichBiegow() == 1)
     then
         automatyczna.setWiadomosc("Awaria bloku hydrauliki skrzyni.");
 end
+
+rule "czujnikiCzyBrakMocyPodczasPrzyspieszania"
+    when
+        czujnikMasyPowietrza : CzujnikMasyPowietrza()
+        eval(czujnikMasyPowietrza.getCzyBrakMocyPodczasPrzyspieszania() == 2)
+    then
+        czujnikMasyPowietrza.setWiadomosc("Brak mocy podczas przyspieszenia - czujnik masy powietrza nie działa.");
+end
+
+rule "czujnikiCzyBrakMocyPodczasPrzyspieszaniaOK"
+    when
+        czujnikMasyPowietrza : CzujnikMasyPowietrza()
+        eval(czujnikMasyPowietrza.getCzyBrakMocyPodczasPrzyspieszania() == 2)
+    then
+        czujnikMasyPowietrza.setWiadomosc("Czujnik masy powietrza działą.");
+end
+
+rule "czujnikiCzyNierownaPracaSilnikaNaJalowymBiegu"
+    when
+        czujnikMasyPowietrza : CzujnikMasyPowietrza();
+        eval(czujnikMasyPowietrza.getCzyNierownaPracaSilnikaNaJalowymBiegu() == 2)
+    then
+        czujnikMasyPowietrza.setWiadomosc("Silnik pracuje nierówno na jałowm biegu - czujnik masy powietrza nie działa.");
+end
+
+rule "czujnikiCzyNierownaPracaSilnikaNaJalowymBieguOK"
+    when
+        czujnikPolozeniaWaluKorbowego : CzujnikPolozeniaWaluKorbowego()
+        eval(czujnikPolozeniaWaluKorbowego.getCzyNierownaPracaSilnika() == 1)
+    then
+        czujnikPolozeniaWaluKorbowego.setWiadomosc("Czujnik masy powietrza dziala.");
+end
+
+rule "czujnikiCzyNierownaPracaSilnika"
+    when
+        czujnikPolozeniaWaluKorbowego : CzujnikPolozeniaWaluKorbowego();
+        eval(czujnikPolozeniaWaluKorbowego.getCzyNierownaPracaSilnika() == 1)
+    then
+        czujnikPolozeniaWaluKorbowego.setWiadomosc("Silnik pracuje nierówno - czujnik położenia wału korbowego nie działa.");
+end
+
+rule "czujnikiCzyNierownaPracaSilnikaOK"
+    when
+        czujnikPolozeniaWaluKorbowego : CzujnikPolozeniaWaluKorbowego();
+        eval(czujnikPolozeniaWaluKorbowego.getCzyNierownaPracaSilnika() == 2)
+    then
+        czujnikPolozeniaWaluKorbowego.setWiadomosc("Czujnik wału korbowego działa.");
+end
+
+rule "przepustnicaCzyNierownaPracaMotoru"
+    when
+        przepustnica : Przepustnica()
+        eval(przepustnica.getCzyNierownaPracaMotoru() == 2)
+    then
+        przepustnica.setWiadomosc("Nierówna praca motoru - przepustnica uszkodzona");
+end
+rule "przepustnicaCzyNierownaPracaMotoruOK"
+    when
+        przepustnica : Przepustnica()
+        eval(przepustnica.getCzyNierownaPracaMotoru() == 1)
+    then
+        przepustnica.setWiadomosc("Wszystko w porzątku.");
+end
+
+
+rule "przepustnicaCzySilnikWylaczaSiePodczasHamowania"
+    when
+        przepustnica : Przepustnica()
+        eval(przepustnica.getCzySilnikWylaczaSiePodczasHamowania() == 2)
+    then
+        przepustnica.setWiadomosc("Silnik wyłącza sie podaczas hamowania - przepustnica uszkodzona");
+end
+
+rule "przepustnicaCzySilnikWylaczaSiePodczasHamowaniaOK"
+    when
+        przepustnica : Przepustnica()
+        eval(przepustnica.getCzySilnikWylaczaSiePodczasHamowania() == 1)
+    then
+        przepustnica.setWiadomosc("Wszystko w porzątku.");
+end
+
+rule "cewkaCzyNierownaPracaSilnikaNaJalowymBiegu"
+    when
+        cewka : Cewka()
+        eval(cewka.getCzyNierownaPracaSilnikaNaJalowymBiegu() == 2)
+    then
+        cewka.setWiadomosc("Silnik pracuje nierówno na jałowm biegu - cewka nie działa.");
+end
+
+rule "cewkaCzyNierownaPracaSilnikaNaJalowymBieguOK"
+    when
+        cewka : Cewka()
+        eval(cewka.getCzyNierownaPracaSilnikaNaJalowymBiegu() == 1)
+    then
+        cewka.setWiadomosc("Wszystko w porzątku.");
+end
+
+rule "cewkaCzyProblemZUruchomieniem"
+    when
+        cewka : Cewka()
+        eval(cewka.getCzyProblemZUruchomieniem() == 2)
+    then
+        cewka.setWiadomosc("Problem z uruchomieniem samochodu - cewka nie działa.");
+end
+
+rule "cewkaCzyProblemZUruchomieniemOK"
+    when
+        cewka : Cewka()
+        eval(cewka.getCzyProblemZUruchomieniem() == 1)
+    then
+        cewka.setWiadomosc("Wszystko w porzątku.");
+end
+
+rule "cewkaCzySpadkiMocySilnika"
+    when
+        cewka : Cewka()
+        eval(cewka.getCzySpadkiMocySilnika() == 2)
+    then
+        cewka.setWiadomosc("Spadki mocy silnika - cewka nie działa.");
+end
+
+rule "cewkaCzySpadkiMocySilnikaOK"
+    when
+        cewka : Cewka()
+        eval(cewka.getCzySpadkiMocySilnika() == 1)
+    then
+        cewka.setWiadomosc("Wszystko w porzątku.");
+end
+
+
+rule "turbosprezarkaCzySpadkiMocySilnika"
+    when
+        turbosprezarka : Turbosprezarka()
+        eval(turbosprezarka.getCzySpadkiMocySilnika() == 2)
+        eval(turbosprezarka.getCzyZwiekszoneZadymienie()==2)
+    then
+        turbosprezarka.setWiadomosc("Spadki mocy silnika oraz zwiekszone zadymienie - Turbosprężarka zepsuta.");
+end
+
+rule "turbosprezarkaCzySpadkiMocySilnikaOK"
+    when
+        turbosprezarka : Turbosprezarka()
+        eval(turbosprezarka.getCzySpadkiMocySilnika() == 1)
+        eval(turbosprezarka.getCzyZwiekszoneZadymienie()== 1)
+    then
+        turbosprezarka.setWiadomosc("Wszystko w porzątku.");
+end
+
+rule "turbosprezarkaCzyWydajeGlosneOdglosy"
+    when
+        turbosprezarka : Turbosprezarka()
+        eval(turbosprezarka.getCzyWydajeGlosneOdglosy() == 2)
+    then
+        turbosprezarka.setWiadomosc("Turbosprężarka wydaje głosne odgłosy - Turbosprężarka zepsuta.");
+end
+
+rule "turbosprezarkaCzyWydajeGlosneOdglosyOK"
+    when
+        turbosprezarka : Turbosprezarka()
+        eval(turbosprezarka.getCzyWydajeGlosneOdglosy() == 1)
+    then
+        turbosprezarka.setWiadomosc("Wszystko w porzątku.");
+end
+
+
+//100
+//skrzynia biegow
+
+rule "manualnaCzyLuznyDrazek"
+    when
+        manualna : Manualna()
+        eval(manualna.getCzyLuznyDrazek() == 2)
+    then
+        manualna.setWiadomosc("Drazek uszkodzony.");
+end
+
+rule "manualnaCzyLuznyDrazekOK"
+    when
+        manualna : Manualna()
+        eval(manualna.getCzyLuznyDrazek() == 1)
+    then
+        manualna.setWiadomosc("Wszystko w porzątku.");
+end
+
+rule "manualnaCzyWyjePodczasJazdy"
+    when
+        manualna : Manualna()
+        eval(manualna.getCzyWyjePodczasJazdy() == 2)
+    then
+        manualna.setWiadomosc("Drazek uszkodzony.");
+end
+
+rule "manualnaCzyWyjePodczasJazdyOK"
+    when
+        manualna : Manualna()
+        eval(manualna.getCzyWyjePodczasJazdy() == 1)
+    then
+        manualna.setWiadomosc("Wszystko w porzątku.");
+end
+
+rule "manualnaCzyZgrzytaPodczasWchodzeniaBieg"
+    when
+        manualna : Manualna()
+        eval(manualna.getCzyZgrzytaPodczasWchodzeniaBiegu() == 2)
+    then
+        manualna.setWiadomosc("Drazek uszkodzony.");
+end
+
+rule "manualnaCzyZgrzytaPodczasWchodzeniaBiegOK"
+    when
+        manualna : Manualna()
+        eval(manualna.getCzyZgrzytaPodczasWchodzeniaBiegu() == 1)
+    then
+        manualna.setWiadomosc("Wszystko w porzątku.");
+end
+//106
