@@ -1,0 +1,803 @@
+package KieRule;
+import com.drools_car_diag.droolsCar.entities.swiatla.migacze.Migacze
+import com.drools_car_diag.droolsCar.entities.swiatla.stopu.Stopu;
+import com.drools_car_diag.droolsCar.entities.swiatla.cofania.Cofania;
+import com.drools_car_diag.droolsCar.entities.rozne.Bezpiecznik;
+import com.drools_car_diag.droolsCar.entities.rozne.Przewody;
+import com.drools_car_diag.droolsCar.entities.rozne.Zarowki;
+import com.drools_car_diag.droolsCar.entities.hamulce.KlockiHamulcowe;
+import com.drools_car_diag.droolsCar.entities.hamulce.PompaHamulcowa;
+import com.drools_car_diag.droolsCar.entities.hamulce.TarczeHamulcowe;
+import com.drools_car_diag.droolsCar.entities.hamulce.TloczkiHamulcowe;
+import com.drools_car_diag.droolsCar.entities.opony.Opony;
+import com.drools_car_diag.droolsCar.entities.skrzyniaBiegow.Automatyczna;
+import com.drools_car_diag.droolsCar.entities.skrzyniaBiegow.Manualna;
+import com.drools_car_diag.droolsCar.entities.ukladKierowniczy.UkladKierowniczy
+import com.drools_car_diag.droolsCar.entities.wydech.Katalizator;
+import com.drools_car_diag.droolsCar.entities.wydech.Kolektor;
+import com.drools_car_diag.droolsCar.entities.wydech.SondaLambda;
+import com.drools_car_diag.droolsCar.entities.wydech.Wydech;
+import com.drools_car_diag.droolsCar.entities.zawieszenie.Amortyzatory;
+import com.drools_car_diag.droolsCar.entities.zawieszenie.GeometriaZawieszenia;
+import com.drools_car_diag.droolsCar.entities.zawieszenie.Stabilizatory;
+import com.drools_car_diag.droolsCar.entities.zawieszenie.Wahacze;
+
+
+
+//migacze
+rule "migaczeCzySwieca"
+    when
+        migacze : Migacze();
+        eval(migacze.isCzySwieca() == 1)
+    then
+        migacze.setWiadomosc("Sprawdź bezpieczniki.");
+end
+
+rule "migaczeCzySwiecaOk"
+    when
+        migacze : Migacze();
+        eval(migacze.isCzySwieca() == 2)
+    then
+        migacze.setWiadomosc("Wyglada na to, ze wszystko jest okej!");
+end
+
+rule "migaczeCzySwiecaBezpiecznikiOk"
+    when
+        migacze : Migacze()
+        bezpiecznik : Bezpiecznik()
+        eval(migacze.isCzySwieca() == 1)
+        eval(bezpiecznik.isCzySpalony() == 1)
+     then
+        migacze.setWiadomosc("Sprawdź zarówkę.");
+end
+
+rule "migaczeCzySwiecaBezpiecznikiZly"
+    when
+        migacze : Migacze()
+        bezpiecznik : Bezpiecznik()
+        eval(migacze.isCzySwieca() == 1)
+        eval(bezpiecznik.isCzySpalony() == 2)
+     then
+        migacze.setWiadomosc("Wymien bezpiecznik - Uszkodzony.");
+end
+
+rule "migaczeCzySwiecaBezpieczniki&ZarowkaOk"
+    when
+        migacze : Migacze()
+        bezpiecznik : Bezpiecznik()
+        zarowka : Zarowki()
+        eval(migacze.isCzySwieca() == 1)
+        eval(bezpiecznik.isCzySpalony() == 1)
+        eval(zarowka.isCzySpalone() == 1)
+     then
+        migacze.setWiadomosc("Sprawdź przewody");
+end
+
+rule "migaczeCzySwiecaBezpieczniki&ZarowkaZla"
+    when
+        migacze : Migacze()
+        bezpiecznik : Bezpiecznik()
+        zarowka : Zarowki()
+        eval(migacze.isCzySwieca() == 1)
+        eval(bezpiecznik.isCzySpalony() == 1)
+        eval(zarowka.isCzySpalone() == 2)
+     then
+        migacze.setWiadomosc("Wymień żarówkę - Uszkodzona.");
+end
+
+rule "migaczeCzySwiecaBezpieczniki&Zarowka&PrzewodyOk"
+    when
+        migacze : Migacze()
+        bezpiecznik : Bezpiecznik()
+        przewody : Przewody()
+        zarowka : Zarowki()
+        eval(migacze.isCzySwieca() == 1)
+        eval(bezpiecznik.isCzySpalony() == 1)
+        eval(przewody.isCzyUszkodzone() == 1)
+        eval(zarowka.isCzySpalone() == 1)
+     then
+        migacze.setWiadomosc("Uszkodzony alternator / Wyczerpany akumulator.");
+end
+
+rule "migaczeCzySwiecaBezpieczniki&Zarowka&PrzewodyZla"
+    when
+        migacze : Migacze()
+        bezpiecznik : Bezpiecznik()
+        przewody : Przewody()
+        zarowka : Zarowki()
+        eval(migacze.isCzySwieca() == 1)
+        eval(bezpiecznik.isCzySpalony() == 1)
+        eval(przewody.isCzyUszkodzone() == 2)
+        eval(zarowka.isCzySpalone() == 1)
+     then
+        migacze.setWiadomosc("Wymień przewód - Uszkodzony.");
+end
+
+rule "migaczeCzyMigajaZaSzybko"
+    when
+        migacze: Migacze()
+        eval(migacze.isCzySwieca() == 2 && migacze.isCzyZaSzybkoMigaja() == 2)
+    then
+        migacze.setWiadomosc("Sprawdź czy jedna z żarówek migaczy nie jest przepalona.");
+end
+
+rule "migaczeCzyMigajaZaSzybkoZarowkaOk"
+    when
+        migacze: Migacze()
+        zarowka: Zarowki()
+        eval(migacze.isCzySwieca() == 2 && migacze.isCzyZaSzybkoMigaja() == 2 && zarowka.isCzySpalone() == 1 && zarowka.isNapiecie() == 0 )
+    then
+        migacze.setWiadomosc("Sprawdź napięcię żarówek!");
+end
+
+rule "migaczeCzyMigajaZaSzybkoZarowkaZla"
+    when
+        migacze: Migacze()
+        zarowka: Zarowki()
+        eval(migacze.isCzySwieca() == 2 && migacze.isCzyZaSzybkoMigaja() == 2 && zarowka.isCzySpalone() == 2 )
+    then
+        migacze.setWiadomosc("Wymień żarówkę - Uszkodzona.");
+end
+
+rule "migaczeCzyMigajaZaSzybkoZarowkaNapiecieZle"
+    when
+        migacze: Migacze()
+        zarowka: Zarowki()
+        eval(migacze.isCzySwieca() == 2 && migacze.isCzyZaSzybkoMigaja() == 2 && zarowka.isCzySpalone() == 1 && zarowka.isNapiecie() == 1 )
+    then
+        migacze.setWiadomosc("Wmień Zarówkę - Z poprawnym napięciem.");
+end
+
+
+rule "migaczeCzyMigajaZaSzybkoZarowka&NapiecieOk"
+    when
+        migacze: Migacze()
+        zarowka: Zarowki()
+        eval(migacze.isCzyZaSzybkoMigaja() == 2 &&  migacze.isCzySwieca() == 2 && zarowka.isCzySpalone() == 1 && zarowka.isNapiecie() == 2)
+    then
+        migacze.setWiadomosc("Wymień przerywacz - Uszkodzony.");
+end
+
+rule "migaczeDzialaja"
+    when
+        migacze: Migacze()
+        eval(migacze.isCzySwieca() == 2 && migacze.isCzySwieca() == 1 && migacze.isCzyDzialaPrawaStrona() == 2 && migacze.isCzyDzialaLewaStrona() == 2)
+     then
+        migacze.setWiadomosc("Wygląda na to, że migacze działają prawidłowo!");
+end
+//migacze stop
+
+//stopu start
+rule "stopCzySwieci"
+    when
+        stopu: Stopu()
+        eval(stopu.getCzySwiecaStop() == 1 && stopu.getCzyDzialaCzujnikHamowania() == 0)
+    then
+        stopu.setWiadomosc("Sprawdz bezpieczniki.");
+end
+
+rule "stopCzySwieciOk"
+when
+        stopu: Stopu()
+        eval(stopu.getCzySwiecaStop() == 2)
+        eval(stopu.getCzyDzialaCzujnikHamowania() == 0)
+then
+        stopu.setWiadomosc("Wyglada na to, ze dzialaja poprawnie.");
+end
+
+
+rule "stopCzySwieciBezpiecznikOk"
+    when
+        stopu: Stopu()
+        bezpiecznik : Bezpiecznik()
+        eval(stopu.getCzySwiecaStop() == 1)
+        eval(bezpiecznik.isCzySpalony() == 1)
+    then
+        stopu.setWiadomosc("Sprawdz zarówkę.");
+end
+
+rule "stopCzySwieciBezpiecznikZly"
+    when
+        stopu: Stopu()
+        bezpiecznik : Bezpiecznik()
+        eval(stopu.getCzySwiecaStop() == 1)
+        eval(bezpiecznik.isCzySpalony() == 2)
+    then
+        System.out.println(stopu.getCzySwiecaStop() + " " + bezpiecznik.isCzySpalony());
+        stopu.setWiadomosc("Wymień bezpiecznik.");
+end
+
+rule "stopCzySwieciBezpiecznik&ZarowkaOk"
+    when
+        stopu: Stopu()
+        bezpiecznik : Bezpiecznik()
+        zarowka : Zarowki()
+        eval(stopu.getCzySwiecaStop() == 1)
+        eval(bezpiecznik.isCzySpalony() == 1)
+        eval(zarowka.isCzySpalone() == 1)
+    then
+        stopu.setWiadomosc("Sprawdz przewody.");
+end
+
+
+rule "stopCzySwieciBezpiecznikOk&ZarowkaZla"
+    when
+        stop: Stopu()
+        bezpiecznik : Bezpiecznik()
+        zarowka : Zarowki()
+        eval(stop.getCzySwiecaStop() == 1)
+        eval(bezpiecznik.isCzySpalony() == 1)
+        eval(zarowka.isCzySpalone() == 2)
+    then
+        stop.setWiadomosc("Wymień żarówkę.");
+end
+
+rule "stopCzySwieciBezpiecznik&Zarowka&PrzewodOk"
+    when
+        stop: Stopu()
+        bezpiecznik : Bezpiecznik()
+        zarowka : Zarowki()
+        przewod : Przewody()
+        eval(stop.getCzySwiecaStop() == 1)
+        eval(bezpiecznik.isCzySpalony() == 1)
+        eval(zarowka.isCzySpalone() == 1)
+    then
+        stop.setWiadomosc("Sprawdź czujnik hamowania.");
+end
+
+rule "stopCzySwieciBezpiecznik&Zarowka&PrzewodZly"
+    when
+        stop: Stopu()
+        bezpiecznik : Bezpiecznik()
+        zarowka : Zarowki()
+        przewod : Przewody()
+        eval(stop.getCzySwiecaStop() == 1)
+        eval(bezpiecznik.isCzySpalony() == 1)
+        eval(zarowka.isCzySpalone() == 1)
+        eval(przewod.isCzyUszkodzone() == 2)
+    then
+        stop.setWiadomosc("Wymień przewód.");
+end
+
+rule "stopCzySwieciBezpiecznik&Zarowka&Przewod&CzujnikOk"
+    when
+        stop: Stopu()
+        bezpiecznik : Bezpiecznik()
+        zarowka : Zarowki()
+        przewod : Przewody()
+        eval(stop.getCzySwiecaStop()==1 && stop.getCzyDzialaCzujnikHamowania() == 2)
+        eval(bezpiecznik.isCzySpalony() == 1)
+        eval(zarowka.isCzySpalone() == 1)
+        eval(przewod.isCzyUszkodzone() == 1)
+    then
+        stop.setWiadomosc("Sprawdź czy dochodzi napięcie - jeżeli tak, uszkodzony czujnik hamowania.");
+end
+
+rule "stopCzySwieciBezpiecznik&Zarowka&Przewod&CzujnikZly"
+    when
+        stop: Stopu()
+        bezpiecznik : Bezpiecznik()
+        zarowka : Zarowki()
+        przewod : Przewody()
+        eval(stop.getCzySwiecaStop()==1 && stop.getCzyDzialaCzujnikHamowania() == 1)
+        eval(bezpiecznik.isCzySpalony() == 1)
+        eval(zarowka.isCzySpalone() == 1)
+        eval(przewod.isCzyUszkodzone() == 1)
+
+    then
+        stop.setWiadomosc("Wymień czujnik hamowania.");
+end
+//stopu Stop - 24
+
+//cofania start
+rule "cofaniaCzySwieciNie"
+    when
+        cofania : Cofania()
+        eval(cofania.getCzySwieca() == 1)
+     then
+        cofania.setWiadomosc("Sprawdź bezpieczniki.");
+end
+
+rule "cofaniaCzySwieciTak"
+    when
+        cofania : Cofania()
+        eval(cofania.getCzySwieca() == 2)
+     then
+        cofania.setWiadomosc("Dzialają poprawnie / Uszkodzony czujnik, jeżeli świecą ciągle.");
+end
+
+rule "cofaniaCzySwieciNieBezpiecznikOk"
+    when
+        cofania : Cofania()
+        bezpiecznik : Bezpiecznik()
+        eval(cofania.getCzySwieca() == 1)
+        eval(bezpiecznik.isCzySpalony() == 1)
+     then
+        cofania.setWiadomosc("Sprawdź żarówki.");
+end
+
+rule "cofaniaCzySwieciNieBezpiecznikZly"
+    when
+        cofania : Cofania()
+        bezpiecznik : Bezpiecznik()
+        eval(cofania.getCzySwieca() == 1)
+        eval(bezpiecznik.isCzySpalony() == 2)
+     then
+        cofania.setWiadomosc("Wymień bezpiecznik - Uszkodzony.");
+end
+
+rule "cofaniaCzySwieciNieBezpiecznik&ZarowkaOk"
+    when
+        cofania : Cofania()
+        bezpiecznik : Bezpiecznik()
+        zarowka: Zarowki()
+        eval(cofania.getCzySwieca() == 1)
+        eval(bezpiecznik.isCzySpalony() == 1)
+        eval(zarowka.isCzySpalone() == 1)
+     then
+        cofania.setWiadomosc("Sprawdź przewody.");
+end
+
+rule "cofaniaCzySwieciNieBezpiecznik&ZarowkaZla"
+    when
+        cofania : Cofania()
+        bezpiecznik : Bezpiecznik()
+        zarowka: Zarowki()
+        eval(cofania.getCzySwieca() == 1)
+        eval(bezpiecznik.isCzySpalony() == 1)
+        eval(zarowka.isCzySpalone() == 2)
+     then
+        cofania.setWiadomosc("Wymień żarówkę - Uszkodzona.");
+end
+
+rule "cofaniaCzySwieciNieBezpiecznik&Zarowka&PrzewodOk"
+    when
+        cofania : Cofania()
+        bezpiecznik : Bezpiecznik()
+        zarowka: Zarowki()
+        przewod: Przewody()
+        eval(cofania.getCzySwieca() == 1)
+        eval(bezpiecznik.isCzySpalony() == 1)
+        eval(zarowka.isCzySpalone() == 1)
+        eval(przewod.isCzyUszkodzone() == 1)
+     then
+        cofania.setWiadomosc("Wymień czujnik biegu wstecznego - Uszkodzony.");
+end
+
+rule "cofaniaCzySwieciNieBezpiecznik&Zarowka&PrzewodZly"
+    when
+        cofania : Cofania()
+        bezpiecznik : Bezpiecznik()
+        zarowka: Zarowki()
+        przewod: Przewody()
+        eval(cofania.getCzySwieca() == 1)
+        eval(bezpiecznik.isCzySpalony() == 1)
+        eval(zarowka.isCzySpalone() == 1)
+        eval(przewod.isCzyUszkodzone() == 2)
+     then
+        cofania.setWiadomosc("Wymień przewód - Uszkodzony.");
+end
+
+rule "cofaniaCzySwieciNieBezpiecznik&Zarowka&Przewod&CzujnikOk"
+    when
+        cofania : Cofania()
+        bezpiecznik : Bezpiecznik()
+        zarowka: Zarowki()
+        przewod: Przewody()
+        eval(cofania.getCzySwieca() == 1 && cofania.getCzyCzujnikBieguDziala() == 2)
+        eval(bezpiecznik.isCzySpalony() == 1)
+        eval(zarowka.isCzySpalone() == 1)
+        eval(przewod.isCzyUszkodzone() == 1)
+     then
+        cofania.setWiadomosc("Coś poszło nie tak - skonsultuj się z mechanikiem.");
+end
+
+//swiatla cofania Stop
+//33
+
+//swiatla oswietlajace start
+
+//hamulce
+
+rule "klockiHamulcoweCzyZuzyte"
+    when
+        klockiHamulcowe: KlockiHamulcowe()
+        eval(klockiHamulcowe.getCzyZuzyte() == 1)
+    then
+        klockiHamulcowe.setWiadomosc("Wymien klocki hamulcowe.");
+end
+
+rule "klockiHamulcoweCzySiePrzegrzewaja"
+    when
+        klockiHamulcowe: KlockiHamulcowe()
+        eval(klockiHamulcowe.getCzySiePrzegrzewaja() == 1)
+    then
+        klockiHamulcowe.setWiadomosc("Wymien klocki hamulcowe.");
+end
+
+rule "tarczeHamulcoweCzySiePrzegrzewaja()"
+    when
+        tarczeHamulcowe: TarczeHamulcowe()
+        eval(tarczeHamulcowe.getCzySiePrzegrzewaja() == 1)
+    then
+        tarczeHamulcowe.setWiadomosc("Wymien tarcze hamulcowe.");
+end
+
+rule "tarczeHamulcoweCzySaUszkodzone"
+    when
+        tarczeHamulcowe: TarczeHamulcowe()
+        eval(tarczeHamulcowe.getCzySaUszkodzone() == 1)
+    then
+        tarczeHamulcowe.setWiadomosc("Tarcze hamulcowe sa uszkodzone, wymien je.");
+end
+
+rule "pompaHamulcowaCzyJestPlynHamulcowy"
+    when
+        pompaHamulcowa: PompaHamulcowa()
+        eval(pompaHamulcowa.getCzyJestPlynHamulcowy() == 1)
+    then
+        pompaHamulcowa.setWiadomosc("Uzupelnij plyn hamulcowy.");
+end
+
+rule "pompaHamulcowaCzyJestOdpowiedniaIloscWodyWPlynieHamulcowym"
+    when
+        pompaHamulcowa: PompaHamulcowa()
+        eval(pompaHamulcowa.getIloscWodyWplynieHamulcowym() == 1)
+    then
+        pompaHamulcowa.setWiadomosc("Za duza ilosc wody w plynie hamulcowym. Wymien plyn.");
+end
+
+rule "pompaHamulcowaCzyCisinienieJestOdpowiednie"
+    when
+        pompaHamulcowa: PompaHamulcowa()
+        eval(pompaHamulcowa.getCzyJestOdpowiednieCisnienie() == 1)
+    then
+        pompaHamulcowa.setWiadomosc("Wyreguluj cisnienie w pompie hamulcowej.");
+end
+
+//ponizej do poprawy ??
+
+rule "tarczeHamulcoweUszkodzonePrzezKlocki"
+    when
+        tarczeHamulcowe: TarczeHamulcowe()
+        klockiHamulcowe: KlockiHamulcowe()
+        eval(tarczeHamulcowe.getCzySaUszkodzone() == 1 && klockiHamulcowe.getCzySiePrzegrzewaja() == 1)
+    then
+        tarczeHamulcowe.setWiadomosc("Zbyt duzy nacisk klockow powoduje uszkadzanie tarcz hamulcowych. Udaj sie do mechanika.");
+end
+
+rule "tarczeHamulcowePrzegrzewaja"
+    when
+        tarczeHamulcowe: TarczeHamulcowe()
+        eval(tarczeHamulcowe.getCzySiePrzegrzewaja() == 1)
+    then
+        tarczeHamulcowe.setWiadomosc("Wymien tarcze hamulcowe.");
+end
+
+rule "tloczkiHamulcoweCzyZabrudzone"
+    when
+        tloczkiHamulcowe: TloczkiHamulcowe()
+        eval(tloczkiHamulcowe.getCzyZabrudzone() == 1)
+    then
+        tloczkiHamulcowe.setWiadomosc("Wyczysc tloczki hamulcowe.");
+end
+
+rule "tloczkiHamulcoweCzySkorodowane"
+    when
+        tloczkiHamulcowe: TloczkiHamulcowe()
+        eval(tloczkiHamulcowe.getCzySkorodowane() == 1)
+    then
+        tloczkiHamulcowe.setWiadomosc("Wymien tloczki hamulcowe.");
+end
+
+rule "tloczkiHamulcoweCzyKolaSieBlokuja"
+    when
+        tloczkiHamulcowe: TloczkiHamulcowe()
+        eval(tloczkiHamulcowe.getCzyKolaSieBlokuja() == 1)
+    then
+        tloczkiHamulcowe.setWiadomosc("Prowadnice zacisku hamulcowego blokuja kola.");
+end
+
+rule "tloczkiHamulcoweCzyKolaSieBlokujaCzyZabrudzone"
+    when
+        tloczkiHamulcowe: TloczkiHamulcowe()
+        eval(tloczkiHamulcowe.getCzyKolaSieBlokuja() == 1)
+        eval(tloczkiHamulcowe.getCzyZabrudzone() == 1)
+    then
+        tloczkiHamulcowe.setWiadomosc("Zabrudzone tloczki powoduja blokowanie sie kol.");
+end
+
+//opony
+
+rule "oponyCzyBieznikZuzyty"
+    when
+        opony: Opony()
+        eval(opony.getCzyBieznikZuzyty() == 1)
+    then
+        opony.setWiadomosc("Wymien opony.");
+end
+
+rule "oponyCzyCisnieniePrawidlowe"
+    when
+        opony: Opony()
+        eval(opony.getCzyCisnieniePrawidlowe() == 1)
+    then
+        opony.setWiadomosc("Wyreguluj cisnienie w oponach.");
+end
+
+rule "oponyCzyPrzebite"
+    when
+        opony: Opony()
+        eval(opony.getCzyPrzebite() == 1)
+    then
+        opony.setWiadomosc("Wymien opone/opony.");
+end
+
+rule "oponyCzySamochodTraciSterownosc"
+    when
+        opony: Opony()
+        eval(opony.getCzySamochodTraciSterownosc() == 1)
+    then
+        opony.setWiadomosc("Niepoprawny montaz opon.");
+end
+
+rule "oponyCzyDrganiePodczasJazdy"
+    when
+        opony: Opony()
+        eval(opony.getCzyDrganiaPodczasJazdy() == 1)
+    then
+        opony.setWiadomosc("Niewyważone koła.");
+end
+
+//amortyzatory
+
+rule "amortyzatoryWydluzonaDrogaHamowania"
+    when
+        amortyzatory: Amortyzatory()
+        eval(amortyzatory.getWydluzonaDrogaHamowania() == 1)
+    then
+        amortyzatory.setWiadomosc("Uszkodzone amortyzatory.");
+end
+
+rule "amortyzatoryWyciekOlejuZAmortyzatora"
+    when
+        amortyzatory: Amortyzatory()
+        eval(amortyzatory.getWyciekOlejuZAmortyzatora() == 1)
+    then
+        amortyzatory.setWiadomosc("Uszkodony amortyzator.");
+end
+
+rule "amortyzatoryOdrywajaceSieKolaOdNawierzchni"
+    when
+        amortyzatory: Amortyzatory()
+        eval(amortyzatory.getOdrywajaceSieKolaOdNawierzchni() == 1)
+    then
+        amortyzatory.setWiadomosc("Uszkodzone amortyzatory.");
+end
+
+//geometria zawieszenia
+
+rule "geometeriaSamoistneSkrecaniePojazdu"
+    when
+        geometriaZawieszenia: GeometriaZawieszenia()
+        eval(geometriaZawieszenia.getSamoistneSkrecaniePojazdu() == 1)
+    then
+        geometriaZawieszenia.setWiadomosc("Niepoprawna geometria zawieszenia. Udaj sie do mechanika.");
+end
+
+rule "geometriaOdpowiedniaZbieznoscKol"
+    when
+        geometriaZawieszenia: GeometriaZawieszenia()
+        eval(geometriaZawieszenia.getOdpowiedniaZbieznoscKol() == 1)
+    then
+        geometriaZawieszenia.setWiadomosc("Niepoprawna geometria zawieszenia. Udaj sie do mechanika.");
+end
+
+rule "geometriaKatPochyleniaKol"
+    when
+        geometriaZawieszenia: GeometriaZawieszenia()
+        eval(geometriaZawieszenia.getKatPochyleniaKol() == 1)
+    then
+        geometriaZawieszenia.setWiadomosc("Niepoprawna geometria zawieszenia. Udaj sie do mechanika.");
+end
+
+//56
+
+rule "geometeriaCzyPiskOponPodczasSkrecania"
+    when
+        geometriaZawieszenia: GeometriaZawieszenia()
+        eval(geometriaZawieszenia.getCzyPiskOponPodczasSkrecania() == 1)
+    then
+        geometriaZawieszenia.setWiadomosc("Źle ustawiona geometria zawieszenia.");
+end
+
+rule "stabilizatoryCzyStukanieZawieszeniaPodczasJazdyPoNierownosciach"
+    when
+        stabilizatory: Stabilizatory()
+        eval(stabilizatory.getCzyStukanieZawieszeniaPodczasJazdyPoNierownosciach() == 1)
+    then
+        stabilizatory.setWiadomosc("Uszkodzony lub poluzowany łącznik stabilizatora.");
+end
+
+rule "stabilizatoryCzyGumaStabilizatoraZuzyta"
+    when
+        stabilizatory: Stabilizatory()
+        eval(stabilizatory.getCzyGumaStabilizatoraZuzyta() == 1)
+    then
+        stabilizatory.setWiadomosc("Wymien gume stabilizatora.");
+end
+
+rule "wahaczeCzyTulejeZuzyte"
+    when
+        wahacze: Wahacze()
+        eval(wahacze.getCzyStukaniePodczasjazdyPoNierownosciach() == 1 && wahacze.getCzySzarpaniePrzyRuszaniu() == 1)
+    then
+        wahacze.setWiadomosc("Zużyte tuleje wahacza.");
+end
+
+rule "wahaczeCzyPukanieWKolach"
+    when
+        wahacze: Wahacze()
+        eval(wahacze.getCzyPukanieWKolach() == 1)
+    then
+        wahacze.setWiadomosc("Zużyty sworzeń wahacza.");
+end
+
+rule "ukladKierowniczyCzySzarpanieWKolachPodczasJazdy"
+    when
+        ukladKierowniczy: UkladKierowniczy()
+        eval(ukladKierowniczy.getCzySzarpaniePodczasSkrecania() == 1)
+    then
+        ukladKierowniczy.setWiadomosc("Zapowietrzenie układu kierowniczego. Sprawdź także pompę wspomagania.");
+end
+
+rule "ukladKierowniczyCzyLuzWKolachPodczasJazdy"
+    when
+        ukladKierowniczy: UkladKierowniczy()
+        eval(ukladKierowniczy.getCzyLuzWKolachPodczasJazdy() == 1)
+    then
+        ukladKierowniczy.setWiadomosc("Wyrobione końcówki drążków kierowniczych.");
+end
+
+rule "ukladKierowniczyCzyDrganieKierownicyPodczasPostoju"
+    when
+        ukladKierowniczy: UkladKierowniczy()
+        eval(ukladKierowniczy.getCzyDrganieKierownicyPodczasPostoju() == 1)
+    then
+        ukladKierowniczy.setWiadomosc("Zapowietrzony układ wspomagania.");
+end
+
+rule "ukladKierowniczyCzyWspomaganieDziala"
+    when
+        ukladKierowniczy: UkladKierowniczy()
+        eval(ukladKierowniczy.getCzyWspomaganieDziala() == 1)
+    then
+        ukladKierowniczy.setWiadomosc("Przepalony bezpiecznik w urządzeniu sterującym.");
+end
+
+rule "ukladKierowniczyWspomaganieRazDzialaRazNie"
+    when
+        ukladKierowniczy: UkladKierowniczy()
+        eval(ukladKierowniczy.getWspomaganieRazDzialaRazNie() == 1)
+    then
+        ukladKierowniczy.setWiadomosc("Uszkodzona instalacja elektryczna.");
+end
+
+rule "ukladKierowniczyWyciePompyWTrakcieJazdy"
+    when
+        ukladKierowniczy: UkladKierowniczy()
+        eval(ukladKierowniczy.getWyciePompyWTrakcieJazdy() == 1)
+    then
+        ukladKierowniczy.setWiadomosc("Zbyt mała ilość płynu w pompie, może dojść do zatarcia.");
+end
+
+//67
+
+rule "ukladKierowniczyCzyUtrudnioneSkrecanie"
+    when
+        ukladKierowniczy: UkladKierowniczy()
+        eval(ukladKierowniczy.getCzyUtrudnioneSkrecanie() == 1)
+    then
+        ukladKierowniczy.setWiadomosc("Pompa generuje zbyt niskie ciśnienie płynu.");
+end
+
+rule "ukladKierowniczyCzyGwizdyPompyWTrakcieJazdy"
+    when
+        ukladKierowniczy: UkladKierowniczy()
+        eval(ukladKierowniczy.getCzyGwizdyPompyWTrakcieJazdy() == 1)
+    then
+        ukladKierowniczy.setWiadomosc("Pompa zasysa powietrze, zbyt mała ilość płynu.");
+end
+
+//wydech
+
+rule "wydechCzyDuzoBialegoDymu"
+    when
+        wydech: Wydech()
+        eval(wydech.getCzyDuzoBialegoDymu() == 1)
+    then
+        wydech.setWiadomosc("Skontroluj poziom płynu w zbiorniku wyrównawczym. Jeśli jego stan jest niski - przeciek w komorze spalania.");
+end
+
+rule "wydechCzyKolorDymuNiebieski"
+    when
+        wydech: Wydech()
+        eval(wydech.getCzyKolorDymuNiebieski() == 1)
+    then
+        wydech.setWiadomosc("Mocne zużycie lub uszkodzenie silnika.");
+end
+
+rule "wydechCzyKolorDymuCzarny"
+    when
+        wydech: Wydech()
+        eval(wydech.getCzyKolorDymuCzarny() == 1)
+    then
+        wydech.setWiadomosc("Awaria elementów układu wtryskowego - wymagana wizyta w specjalistycznym warsztacie.");
+end
+
+rule "wydechCzyGrzechotaniePodczasPracy"
+    when
+        katalizator: Katalizator()
+        eval(katalizator.getCzyGrzechotaniePodczasPracy() == 1)
+    then
+        katalizator.setWiadomosc("Uszkodzony/pęknięty katalizator, zalecana wymiana.");
+end
+
+rule "wydechCzyProblemyZUruchomieniemSilnika"
+    when
+        katalizator: Katalizator()
+        eval(katalizator.getCzyProblemyZUruchomieniemSilnika() == 1)
+    then
+        katalizator.setWiadomosc("Zapchany katalizator.");
+end
+
+rule "wydechCzyPrzyduszanieSilnika"
+    when
+        katalizator: Katalizator()
+        eval(katalizator.getCzyPrzyduszanieSilnika() == 1)
+    then
+        katalizator.setWiadomosc("Zapchany katalizator.");
+end
+
+rule "wydechCzyHalasPodczasPracy"
+    when
+        kolektor: Kolektor()
+        eval(kolektor.getCzyHalasPodczasPracy() == 1)
+    then
+        kolektor.setWiadomosc("Pęknięty kolektor. Zalecana wymiana.");
+end
+
+rule "wydechCzySondaUszkodzona"
+    when
+        sondaLambda: SondaLambda()
+        eval(sondaLambda.getCzySpadekMocySilnika() == 1 && sondaLambda.getCzyWzrostZuzyciaPaliwa() == 1)
+    then
+        sondaLambda.setWiadomosc("Awaria sondy lambda.");
+end
+
+//77
+//skrzynia biegów
+
+rule "automatycznaCzyRozlaczanieNapedu"
+    when
+        automatyczna: Automatyczna()
+        eval(automatyczna.getCzyRozlaczanieNapedu() == 1)
+    then
+        automatyczna.setWiadomosc("Awaria elektroniki sterującej.");
+end
+
+rule "automatycznaCzyBrakBieguWstecznego"
+    when
+        automatyczna: Automatyczna()
+        eval(automatyczna.getCzyBrakBieguWstecznego() == 1)
+    then
+        automatyczna.setWiadomosc("Awaria kosza skrzyni.");
+end
+
+rule "automatycznaCzyBrakWysokichBiegow"
+    when
+        automatyczna: Automatyczna()
+        eval(automatyczna.getCzyBrakWysokichBiegow() == 1)
+    then
+        automatyczna.setWiadomosc("Awaria bloku hydrauliki skrzyni.");
+end
