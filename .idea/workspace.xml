@@ -2,9 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9f2212a2-83b7-4886-9876-fd8c181af5f4" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/contain/automatyczna.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/contain/katalizator.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/contain/kolektor.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/contain/opony.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/contain/pompahamulcowa.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/contain/sondalambda.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/contain/tarcze.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/contain/tarczeklockisprawdz.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/contain/ukladkierowniczy.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/contain/wydech.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/json_handlers.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/json_handlers.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,12 +59,16 @@
     </option>
   </component>
   <component name="ProjectId" id="1WWxQJEuJ3q9yYf13KXbeJrkWJB" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="ExpandSpringBootJavaOptionsPanel" value="true" />
     <property name="RequestMappingsPanelOrder0" value="0" />
@@ -104,6 +117,9 @@
       </MavenSettings>
       <method v="2" />
     </configuration>
+    <configuration name="json_handlers.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/src/main/resources/static/js/json_handlers.js" working-dir="$PROJECT_DIR$/src/main/resources/static/js">
+      <method v="2" />
+    </configuration>
     <configuration name="DroolsCarApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
       <module name="droolsCar" />
       <extension name="coverage">
@@ -120,10 +136,12 @@
     <list>
       <item itemvalue="Maven.droolsCar []" />
       <item itemvalue="Spring Boot.DroolsCarApplication" />
+      <item itemvalue="Node.js.json_handlers.js" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Spring Boot.DroolsCarApplication" />
+        <item itemvalue="Node.js.json_handlers.js" />
       </list>
     </recent_temporary>
   </component>
@@ -152,12 +170,15 @@
       <workItem from="1579279158694" duration="7909000" />
       <workItem from="1579291305066" duration="1661000" />
       <workItem from="1579336728020" duration="3646000" />
-      <workItem from="1579365129658" duration="1169000" />
+      <workItem from="1579365129658" duration="1776000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
   <component name="WindowStateProjectService">
     <state x="618" y="18" key="#DroolsCarApplication" timestamp="1579366062206">
@@ -188,54 +209,70 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="740" y="274" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1579365386094" />
-    <state width="938" height="282" key="GridCell.Tab.0.bottom" timestamp="1579366335004">
+    <state width="812" height="282" key="GridCell.Tab.0.bottom" timestamp="1579367115668">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="938" height="282" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1579366335004" />
-    <state width="938" height="282" key="GridCell.Tab.0.center" timestamp="1579366335004">
+    <state width="812" height="282" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1579367115668" />
+    <state width="812" height="282" key="GridCell.Tab.0.center" timestamp="1579367115667">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="938" height="282" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1579366335004" />
-    <state width="938" height="282" key="GridCell.Tab.0.left" timestamp="1579366335004">
+    <state width="812" height="282" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1579367115667" />
+    <state width="812" height="282" key="GridCell.Tab.0.left" timestamp="1579367115667">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="938" height="282" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1579366335004" />
-    <state width="938" height="282" key="GridCell.Tab.0.right" timestamp="1579366335004">
+    <state width="812" height="282" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1579367115667" />
+    <state width="812" height="282" key="GridCell.Tab.0.right" timestamp="1579367115668">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="938" height="282" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1579366335004" />
-    <state width="938" height="282" key="GridCell.Tab.1.bottom" timestamp="1579366261154">
+    <state width="812" height="282" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1579367115668" />
+    <state width="812" height="282" key="GridCell.Tab.1.bottom" timestamp="1579367115668">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="938" height="282" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1579366261154" />
-    <state width="938" height="282" key="GridCell.Tab.1.center" timestamp="1579366261154">
+    <state width="812" height="282" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1579367115668" />
+    <state width="812" height="282" key="GridCell.Tab.1.center" timestamp="1579367115668">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="938" height="282" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1579366261154" />
-    <state width="938" height="282" key="GridCell.Tab.1.left" timestamp="1579366261153">
+    <state width="812" height="282" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1579367115668" />
+    <state width="812" height="282" key="GridCell.Tab.1.left" timestamp="1579367115668">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="938" height="282" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1579366261153" />
-    <state width="938" height="282" key="GridCell.Tab.1.right" timestamp="1579366261154">
+    <state width="812" height="282" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1579367115668" />
+    <state width="812" height="282" key="GridCell.Tab.1.right" timestamp="1579367115668">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="938" height="282" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1579366261154" />
-    <state width="1877" height="348" key="GridCell.Tab.2.bottom" timestamp="1579286013388">
+    <state width="812" height="282" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1579367115668" />
+    <state width="938" height="348" key="GridCell.Tab.2.bottom" timestamp="1579366912411">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="348" key="GridCell.Tab.2.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1579286013388" />
-    <state width="1877" height="348" key="GridCell.Tab.2.center" timestamp="1579286013388">
+    <state width="938" height="348" key="GridCell.Tab.2.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1579366912411" />
+    <state width="938" height="348" key="GridCell.Tab.2.center" timestamp="1579366912411">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="348" key="GridCell.Tab.2.center/0.0.1920.1040@0.0.1920.1040" timestamp="1579286013388" />
-    <state width="1877" height="348" key="GridCell.Tab.2.left" timestamp="1579286013388">
+    <state width="938" height="348" key="GridCell.Tab.2.center/0.0.1920.1040@0.0.1920.1040" timestamp="1579366912411" />
+    <state width="938" height="348" key="GridCell.Tab.2.left" timestamp="1579366912411">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="348" key="GridCell.Tab.2.left/0.0.1920.1040@0.0.1920.1040" timestamp="1579286013388" />
-    <state width="1877" height="348" key="GridCell.Tab.2.right" timestamp="1579286013388">
+    <state width="938" height="348" key="GridCell.Tab.2.left/0.0.1920.1040@0.0.1920.1040" timestamp="1579366912411" />
+    <state width="938" height="348" key="GridCell.Tab.2.right" timestamp="1579366912411">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="348" key="GridCell.Tab.2.right/0.0.1920.1040@0.0.1920.1040" timestamp="1579286013388" />
+    <state width="938" height="348" key="GridCell.Tab.2.right/0.0.1920.1040@0.0.1920.1040" timestamp="1579366912411" />
+    <state width="938" height="348" key="GridCell.Tab.3.bottom" timestamp="1579366912412">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="938" height="348" key="GridCell.Tab.3.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1579366912412" />
+    <state width="938" height="348" key="GridCell.Tab.3.center" timestamp="1579366912411">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="938" height="348" key="GridCell.Tab.3.center/0.0.1920.1040@0.0.1920.1040" timestamp="1579366912411" />
+    <state width="938" height="348" key="GridCell.Tab.3.left" timestamp="1579366912411">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="938" height="348" key="GridCell.Tab.3.left/0.0.1920.1040@0.0.1920.1040" timestamp="1579366912411" />
+    <state width="938" height="348" key="GridCell.Tab.3.right" timestamp="1579366912412">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="938" height="348" key="GridCell.Tab.3.right/0.0.1920.1040@0.0.1920.1040" timestamp="1579366912412" />
     <state x="763" y="230" key="RollbackChangesDialog" timestamp="1579365912290">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
