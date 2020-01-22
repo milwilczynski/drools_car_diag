@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <style>
+        #c1, #c2, #c3, #c4{
+            display: block;
+        }
+    </style>
+    <script th:inline="javascript">
+    </script>
+</head>
+
+<div style="flex-direction: row; font-family: 'Arial Narrow'; width: 100%;">
+    <img style="margin-left: 45%" th:src="@{/img/parts/klocki.jpg}">
+    <ul>
+        <li onclick="prepareKlockiHamulcoweJSON()" id="c0"> Czy klocki hamulcowe są zużyte?
+            <br/>
+            <input  type="radio" name="0" value="2"> Tak
+            <input  type="radio" name="0" value="1"> Nie
+            <input  type="radio" name="0" value="0" checked> Nie sprawdzone
+        </li>
+        <li onclick="prepareKlockiHamulcoweJSON()" id="c1">
+            Czy klocki hamulcowe się przegrzewają?
+            <br />
+            <input type="radio" name="1"  value="2" onclick=""> Tak
+            <input type="radio" name="1" value="1"> Nie
+            <input  type="radio" name="1" value="0" checked> Nie sprawdzone
+        </li>
+
+    </ul>
+</div>
+</html>

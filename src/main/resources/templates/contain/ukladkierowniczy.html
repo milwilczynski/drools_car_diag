@@ -1,0 +1,66 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <style>
+    #c1, #c2, #c3, #c4{
+        display: block;
+    }
+</style>
+    <script th:inline="javascript">
+    </script>
+</head>
+
+<div style="flex-direction: row; font-family: 'Arial Narrow'; width: 100%;">
+    <img style="margin-left: 30%" th:src="@{/img/parts/uklad.jpg}">
+    <ul>
+        <li onclick="prepareUkladKierowniczyJSON()" id="c0"> Czy występuje szarpanie w kołach podczas jazdy?
+            <br/>
+            <input  type="radio" name="0" value="2"> Tak
+            <input  type="radio" name="0" value="1"> Nie
+            <input  type="radio" name="0" value="0" checked> Nie sprawdzone
+        </li>
+        <li onclick="prepareUkladKierowniczyJSON()" id="c1"> Czy w kołach jest wyczuwalny luz podczas jazdy?
+            <br />
+            <input type="radio" name="1"  value="2" onclick=""> Tak
+            <input type="radio" name="1" value="1"> Nie
+            <input  type="radio" name="1" value="0" checked> Nie sprawdzone
+        </li>
+        <li onclick="prepareUkladKierowniczyJSON()" id="c2"> Czy występuje drganie kierownicy podczas postoju (silnik uruchomiony)?
+            <br />
+            <input type="radio" name="2"  value="2"> Tak
+            <input  type="radio" name="2" value="1"> Nie
+            <input  type="radio" name="2" value="0" checked> Nie sprawdzone
+        </li>
+        <li onclick="prepareUkladKierowniczyJSON()" id="c3"> Czy działa wspomaganie układu kierowniczego>?
+            <br />
+            <input type="radio" name="3"  value="2"> Tak
+            <input type="radio" name="3" value="1"> Nie
+            <input  type="radio" name="3" value="0" checked> Nie sprawdzone
+        </li>
+        <li onclick="prepareUkladKierowniczyJSON()" id="c4"> Czy wspomaganie układu kierowniczego raz działa, a raz nie?
+            <br />
+            <input type="radio" name="4" value="2"> Tak
+            <input type="radio" name="4" value="1"> Nie
+            <input type="radio" name="4" value="0" checked> Nie sprawdzone
+        </li>
+        <li onclick="prepareUkladKierowniczyJSON()" id="c5"> Czy słychać charakterystyczne wycie pompy w trackie jazdy?
+            <br />
+            <input type="radio" name="5" value="2"> Tak
+            <input type="radio" name="5" value="1"> Nie
+            <input type="radio" name="5" value="0" checked> Nie sprawdzone
+        </li>
+        <li onclick="prepareUkladKierowniczyJSON()" id="c6"> Czy występuje problem z utrudnionym skręcaniem w trakcie jazdy?
+            <br />
+            <input type="radio" name="6" value="2"> Tak
+            <input type="radio" name="6" value="1"> Nie
+            <input type="radio" name="6" value="0" checked> Nie sprawdzone
+        </li>
+        <li onclick="prepareUkladKierowniczyJSON()" id="c7"> Czy słychać charakterystyczny gwizd pompy w trakcie jazdy?
+            <br />
+            <input type="radio" name="7" value="2"> Tak
+            <input type="radio" name="7" value="1"> Nie
+            <input type="radio" name="7" value="0" checked> Nie sprawdzone
+        </li>
+    </ul>
+</div>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <style>
+        #c1, #c2, #c3, #c4{
+            display: block;
+        }
+    </style>
+    <script th:inline="javascript">
+    </script>
+</head>
+
+<div style="flex-direction: row; font-family: 'Arial Narrow'; width: 100%;">
+    <img style="margin-left: 45%" th:src="@{/img/parts/manualna.jpg}">
+    <ul>
+        <li onclick="prepareManualnaJSON()" id="c0"> Czy drążek jest luźny?
+            <br/>
+            <input  type="radio" name="0" value="2"> Tak
+            <input  type="radio" name="0" value="1"> Nie
+            <input  type="radio" name="0" value="0" checked> Nie sprawdzone
+        </li>
+        <li onclick="prepareManualnaJSON()" id="c1"> Czy skrzynia wyje podczas zmiany biegu?
+            <br />
+            <input type="radio" name="1"  value="2" onclick=""> Tak
+            <input type="radio" name="1" value="1"> Nie
+            <input  type="radio" name="1" value="0" checked> Nie sprawdzone
+        </li>
+        <li onclick="prepareManualnaJSON()" id="c2"> Czy skrzynia zgrzyta podczas zmiany biegu?
+            <br />
+            <input type="radio" name="2"  value="2"> Tak
+            <input  type="radio" name="2" value="1"> Nie
+            <input  type="radio" name="2" value="0" checked> Nie sprawdzone
+        </li>
+    </ul>
+</div>
+</html>
