@@ -2,37 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9f2212a2-83b7-4886-9876-fd8c181af5f4" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/img/parts/katalizator.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/img/parts/klocki.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/img/parts/kolektor.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/img/parts/sondalambda.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/img/parts/tloczki.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/img/parts/uklad.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/img/parts/wydech.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/contain/manualna.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/contain/tarczehamulcowe.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/contain/tloczkihamulcowe.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/drools_car_diag/droolsCar/controller/FunController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/drools_car_diag/droolsCar/controller/FunController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/offer.drl" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/offer.drl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/css/menuStyle.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/css/menuStyle.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/img/parts/manualna.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/img/parts/manualna.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/img/parts/stabilizatory.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/img/parts/stabilizatory.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/json_handlers.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/json_handlers.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/contain/cewka.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/contain/cewka.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/contain/czujniki.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/contain/czujniki.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/contain/katalizator.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/contain/katalizator.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/contain/klockihamulcowe.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/contain/klockihamulcowe.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/contain/kolektor.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/contain/kolektor.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/contain/przepustnica.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/contain/przepustnica.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/contain/sondalambda.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/contain/sondalambda.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/contain/stabilizatory.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/contain/stabilizatory.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/contain/swiatla.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/contain/swiatla.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/contain/turbosprezarka.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/contain/turbosprezarka.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/contain/ukladkierowniczy.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/contain/ukladkierowniczy.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/contain/wydech.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/contain/wydech.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/main_menu.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/main_menu.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -119,7 +89,7 @@
       <recent name="D:\droolsCar\src\main\resources\static\img" />
     </key>
   </component>
-  <component name="RunManager" selected="Maven.droolsCar [mvn,spring-boot:run]">
+  <component name="RunManager" selected="Spring Boot.DroolsCarApplication">
     <configuration name="droolsCar [mvn,spring-boot:run]" type="MavenRunConfiguration" factoryName="Maven" nameIsGenerated="true">
       <MavenSettings>
         <option name="myGeneralSettings" />
@@ -198,7 +168,8 @@
       <workItem from="1579370089914" duration="8164000" />
       <workItem from="1579441942735" duration="72000" />
       <workItem from="1579679196571" duration="91000" />
-      <workItem from="1579679320850" duration="4599000" />
+      <workItem from="1579679320850" duration="8016000" />
+      <workItem from="1579701700601" duration="1581000" />
     </task>
     <servers />
   </component>
@@ -241,38 +212,38 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="740" y="274" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1579370388546" />
-    <state width="1877" height="282" key="GridCell.Tab.0.bottom" timestamp="1579683926880">
+    <state width="1877" height="282" key="GridCell.Tab.0.bottom" timestamp="1579701747073">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="282" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1579683926880" />
-    <state width="1877" height="282" key="GridCell.Tab.0.center" timestamp="1579683926879">
+    <state width="1877" height="282" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1579701747073" />
+    <state width="1877" height="282" key="GridCell.Tab.0.center" timestamp="1579701747073">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="282" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1579683926879" />
-    <state width="1877" height="282" key="GridCell.Tab.0.left" timestamp="1579683926879">
+    <state width="1877" height="282" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1579701747073" />
+    <state width="1877" height="282" key="GridCell.Tab.0.left" timestamp="1579701747072">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="282" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1579683926879" />
-    <state width="1877" height="282" key="GridCell.Tab.0.right" timestamp="1579683926880">
+    <state width="1877" height="282" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1579701747072" />
+    <state width="1877" height="282" key="GridCell.Tab.0.right" timestamp="1579701747073">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="282" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1579683926880" />
-    <state width="812" height="282" key="GridCell.Tab.1.bottom" timestamp="1579367812693">
+    <state width="1877" height="282" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1579701747073" />
+    <state width="1877" height="282" key="GridCell.Tab.1.bottom" timestamp="1579695448040">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="812" height="282" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1579367812693" />
-    <state width="812" height="282" key="GridCell.Tab.1.center" timestamp="1579367812693">
+    <state width="1877" height="282" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1579695448040" />
+    <state width="1877" height="282" key="GridCell.Tab.1.center" timestamp="1579695448040">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="812" height="282" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1579367812693" />
-    <state width="812" height="282" key="GridCell.Tab.1.left" timestamp="1579367812693">
+    <state width="1877" height="282" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1579695448040" />
+    <state width="1877" height="282" key="GridCell.Tab.1.left" timestamp="1579695448039">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="812" height="282" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1579367812693" />
-    <state width="812" height="282" key="GridCell.Tab.1.right" timestamp="1579367812693">
+    <state width="1877" height="282" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1579695448039" />
+    <state width="1877" height="282" key="GridCell.Tab.1.right" timestamp="1579695448040">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="812" height="282" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1579367812693" />
+    <state width="1877" height="282" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1579695448040" />
     <state width="938" height="348" key="GridCell.Tab.2.bottom" timestamp="1579368595229">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -321,10 +292,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="552" y="252" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1579368382484" />
-    <state x="656" y="343" key="com.intellij.ide.util.TipDialog" timestamp="1579679354805">
+    <state x="656" y="343" key="com.intellij.ide.util.TipDialog" timestamp="1579701702717">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="656" y="343" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1579679354805" />
+    <state x="656" y="343" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1579701702717" />
     <state x="769" y="436" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1579368417019">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
