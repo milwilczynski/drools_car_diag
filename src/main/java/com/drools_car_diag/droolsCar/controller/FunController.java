@@ -6,9 +6,16 @@ import com.drools_car_diag.droolsCar.entities.hamulce.PompaHamulcowa;
 import com.drools_car_diag.droolsCar.entities.hamulce.TarczeHamulcowe;
 import com.drools_car_diag.droolsCar.entities.hamulce.TloczkiHamulcowe;
 import com.drools_car_diag.droolsCar.entities.opony.Opony;
+import com.drools_car_diag.droolsCar.entities.silnik.Cewka;
+import com.drools_car_diag.droolsCar.entities.silnik.Przepustnica;
+import com.drools_car_diag.droolsCar.entities.silnik.Turbosprezarka;
+import com.drools_car_diag.droolsCar.entities.silnik.czujniki.CzujnikMasyPowietrza;
+import com.drools_car_diag.droolsCar.entities.silnik.czujniki.CzujnikPolozeniaWaluKorbowego;
 import com.drools_car_diag.droolsCar.entities.skrzyniaBiegow.Automatyczna;
+import com.drools_car_diag.droolsCar.entities.skrzyniaBiegow.Manualna;
 import com.drools_car_diag.droolsCar.entities.swiatla.cofania.CofaniaSprawdz;
 import com.drools_car_diag.droolsCar.entities.swiatla.migacze.MigaczeSprawdz;
+import com.drools_car_diag.droolsCar.entities.swiatla.oswietlajace.OswietlajaceSprawdz;
 import com.drools_car_diag.droolsCar.entities.swiatla.stopu.StopuSprawdz;
 import com.drools_car_diag.droolsCar.entities.ukladKierowniczy.UkladKierowniczy;
 import com.drools_car_diag.droolsCar.entities.wydech.Katalizator;
@@ -70,6 +77,31 @@ public class FunController {
         return cofaniaSprawdz.getCofania().getWiadomosc();
     }
 
+    @RequestMapping(value = "/swiatla/oswietlajace", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
+    public String checkOswietlajace(@RequestBody OswietlajaceSprawdz oswietlajaceSprawdz) throws IOException {
+        KieSession session;
+        DroolConfig dg = new DroolConfig();
+        session = dg.getKieSession();;
+        session.insert(oswietlajaceSprawdz.getOswietlajace());
+        session.insert(oswietlajaceSprawdz.getBezpiecznik());
+        session.insert(oswietlajaceSprawdz.getZarowki());
+        session.insert(oswietlajaceSprawdz.getPrzewody());
+        session.fireAllRules();
+        session.destroy();
+        return oswietlajaceSprawdz.getOswietlajace().getWiadomosc();
+    }
+
+    @RequestMapping(value = "/hamulce/tarczehamulcowe", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
+    public String checkTarczeHamulcowe(@RequestBody TarczeHamulcowe tarczeHamulcowe) throws IOException {
+        KieSession session;
+        DroolConfig dg = new DroolConfig();
+        session = dg.getKieSession();;
+        session.insert(tarczeHamulcowe);
+        session.fireAllRules();
+        session.destroy();
+        return tarczeHamulcowe.getWiadomosc();
+    }
+
     @RequestMapping(value = "/hamulce/klockihamulcowe", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
     public String checkKlockiHamulcowe(@RequestBody KlockiHamulcowe klockiHamulcowe) throws IOException {
         KieSession session;
@@ -92,16 +124,6 @@ public class FunController {
         return pompaHamulcowa.getWiadomosc();
     }
 
-    @RequestMapping(value = "/hamulce/tarczehamulcowe", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
-    public String checkTarczeHamulcowe(@RequestBody TarczeHamulcowe tarczeHamulcowe) throws IOException {
-        KieSession session;
-        DroolConfig dg = new DroolConfig();
-        session = dg.getKieSession();;
-        session.insert(tarczeHamulcowe);
-        session.fireAllRules();
-        session.destroy();
-        return tarczeHamulcowe.getWiadomosc();
-    }
 
     @RequestMapping(value = "/hamulce/tloczkihamulcowe", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
     public String checkTloczkiHamulcowe(@RequestBody TloczkiHamulcowe tloczkiHamulcowe) throws IOException {
@@ -134,6 +156,16 @@ public class FunController {
         session.fireAllRules();
         session.destroy();
         return automatyczna.getWiadomosc();
+    }
+    @RequestMapping(value = "/skrzynia/manualna", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
+    public String checkSkrzyniaManualna(@RequestBody Manualna manualna) throws IOException {
+        KieSession session;
+        DroolConfig dg = new DroolConfig();
+        session = dg.getKieSession();;
+        session.insert(manualna);
+        session.fireAllRules();
+        session.destroy();
+        return manualna.getWiadomosc();
     }
 
     @RequestMapping(value = "/ukladkierowniczy", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
@@ -234,6 +266,60 @@ public class FunController {
         session.destroy();
         return wahacze.getWiadomosc();
     }
+
+    @RequestMapping(value = "/silnik/cewka", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
+    public String checkCewka(@RequestBody Cewka cewka) throws IOException {
+        KieSession session;
+        DroolConfig dg = new DroolConfig();
+        session = dg.getKieSession();;
+        session.insert(cewka);
+        session.fireAllRules();
+        session.destroy();
+        return cewka.getWiadomosc();
+    }
+
+    @RequestMapping(value = "/silnik/przepustnica", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
+    public String checkPrzepustnica(@RequestBody Przepustnica przepustnica) throws IOException {
+        KieSession session;
+        DroolConfig dg = new DroolConfig();
+        session = dg.getKieSession();;
+        session.insert(przepustnica);
+        session.fireAllRules();
+        session.destroy();
+        return przepustnica.getWiadomosc();
+    }
+    @RequestMapping(value = "/silnik/turbosprezarka", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
+    public String checkTurbosprezarka(@RequestBody Turbosprezarka turbosprezarka) throws IOException {
+        KieSession session;
+        DroolConfig dg = new DroolConfig();
+        session = dg.getKieSession();;
+        session.insert(turbosprezarka);
+        session.fireAllRules();
+        session.destroy();
+        return turbosprezarka.getWiadomosc();
+    }
+
+    @RequestMapping(value = "/silnik/czujniki/masy", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
+    public String checkCzujnikMasy(@RequestBody CzujnikMasyPowietrza czujnikMasyPowietrza) throws IOException {
+        KieSession session;
+        DroolConfig dg = new DroolConfig();
+        session = dg.getKieSession();;
+        session.insert(czujnikMasyPowietrza);
+        session.fireAllRules();
+        session.destroy();
+        return czujnikMasyPowietrza.getWiadomosc();
+    }
+    @RequestMapping(value = "/silnik/czujniki/polozenia", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
+    public String checkPolozenia(@RequestBody CzujnikPolozeniaWaluKorbowego czujnikPolozeniaWaluKorbowego) throws IOException {
+        KieSession session;
+        DroolConfig dg = new DroolConfig();
+        session = dg.getKieSession();;
+        session.insert(czujnikPolozeniaWaluKorbowego);
+        session.fireAllRules();
+        session.destroy();
+        return czujnikPolozeniaWaluKorbowego.getWiadomosc();
+    }
+
 
 
 

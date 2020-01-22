@@ -387,43 +387,6 @@ function sendWahaczeJSON(tuleje, pukanie, szarpie) {
 
 //pompa hamulcowa
 
-function prepareTarczeHamulcoweJSON(){
-    var przegrzewaja = parseInt(document.querySelector('input[name="0"]:checked').value);
-
-    sendTarczeHamulcoweJSON(przegrzewaja);
-}
-
-function sendTarczeHamulcoweJSON(przegrzewaja) {
-    const xmlhttp = new XMLHttpRequest();
-    const url="/hamulce/tarcze";
-    xmlhttp.open("POST", url, true);
-    xmlhttp.setRequestHeader("Content-Type", "application/json");
-    xmlhttp.send(JSON.stringify(
-      {
-            "CzySiePrzegrzewaja": przegrzewaja,
-            "CzySaUszkodzone": 0,
-            "wiadomosc": ""
-        }
-    ));
-
-    xmlhttp.onreadystatechange = function(){
-        if(xmlhttp.status == 200){
-            var object = (xmlhttp.responseText);
-            document.getElementById('containerDiv').style.display = "none";
-            if(object.toString().length < 4){
-                //nie pokazuj nic
-            }else {
-                document.getElementById("containerDiv").innerHTML = object.toString();
-                document.getElementById('containerDiv').style.display = "block";
-
-                //hide after 3s
-                setTimeout(function () {document.getElementById('containerDiv').style.display='none'}, 3000); return false
-            }
-        }else{
-            console.log("nie dziala");
-        }
-    }
-}
 
 //tarcze klocki
 
@@ -713,7 +676,7 @@ function sendSondaLambdaJSON(spadekMocy, wzrostZuzycia) {
 
             "wiadomosc": "",
             "czySpadekMocySilnika": spadekMocy,
-            "czyWzrostZuzyciaPaliwa": wzrostZuzycia,
+            "czyWzrostZuzyciaPaliwa": wzrostZuzycia
 
     }));
 
@@ -777,3 +740,406 @@ function sendWydechJSON(bialy, niebieski, czarny) {
     }
 }
 
+//układ wydech - wydech
+
+function prepareManualnaJSON(){
+    var luzny = parseInt(document.querySelector('input[name="0"]:checked').value);
+    var wyje = parseInt(document.querySelector('input[name="1"]:checked').value);
+    var zgrzyta = parseInt(document.querySelector('input[name="2"]:checked').value);
+
+    sendManualnaJSON(luzny, wyje, zgrzyta);
+}
+
+function sendManualnaJSON(luzny, wyje, zgrzyta) {
+    const xmlhttp = new XMLHttpRequest();
+    const url="/skrzynia/manualna";
+    xmlhttp.open("POST", url, true);
+    xmlhttp.setRequestHeader("Content-Type", "application/json");
+    xmlhttp.send(JSON.stringify({
+        "czyLuznyDrazek": luzny,
+        "czyWyjePodczasJazdy": wyje,
+        "czyZgrzytaPodczasWchodzeniaBiegu": zgrzyta,
+        "wiadomosc": ""
+    }));
+
+    xmlhttp.onreadystatechange = function(){
+        if(xmlhttp.status == 200){
+            var object = (xmlhttp.responseText);
+            document.getElementById('containerDiv').style.display = "none";
+            if(object.toString().length < 4){
+                //nie pokazuj nic
+            }else {
+                document.getElementById("containerDiv").innerHTML = object.toString();
+                document.getElementById('containerDiv').style.display = "block";
+
+                //hide after 3s
+                setTimeout(function () {document.getElementById('containerDiv').style.display='none'}, 3000); return false
+            }
+        }else{
+            console.log("nie dziala");
+        }
+    }
+}
+
+//swiatla drogowe
+
+function prepareSwiatlaJSON(){
+    var swieci = parseInt(document.querySelector('input[name="0"]:checked').value);
+    var przepalony = parseInt(document.querySelector('input[name="1"]:checked').value);
+    var zarowkaPrzepalona = parseInt(document.querySelector('input[name="2"]:checked').value);
+    var uszkodzony = parseInt(document.querySelector('input[name="3"]:checked').value);
+    var slabo = parseInt(document.querySelector('input[name="4"]:checked').value);
+    sendSwiatlaJSON(swieci, przepalony, zarowkaPrzepalona, uszkodzony, slabo);
+}
+
+function sendSwiatlaJSON(swieci, przepalony, zarowkaPrzepalona, uszkodzony, slabo) {
+    const xmlhttp = new XMLHttpRequest();
+    const url="/swiatla/oswietlajace";
+    xmlhttp.open("POST", url, true);
+    xmlhttp.setRequestHeader("Content-Type", "application/json");
+    xmlhttp.send(JSON.stringify({
+        "oswietlajace":{
+            "czySwieca": swieci,
+            "czyDajaSlabeSwiatlo": slabo,
+            "wiadomosc": ""
+        },
+        "bezpiecznik":{
+            "czySpalony": przepalony
+        },
+        "zarowki":{
+            "czySpalone": zarowkaPrzepalona,
+            "napiecie": 0
+        },
+        "przewody":{
+            "czyUszkodzone":uszkodzony
+        }
+    }
+        ));
+
+    xmlhttp.onreadystatechange = function(){
+        if(xmlhttp.status == 200){
+            var object = (xmlhttp.responseText);
+            document.getElementById('containerDiv').style.display = "none";
+            if(object.toString().length < 4){
+                //nie pokazuj nic
+            }else {
+                document.getElementById("containerDiv").innerHTML = object.toString();
+                document.getElementById('containerDiv').style.display = "block";
+
+                //hide after 3s
+                setTimeout(function () {document.getElementById('containerDiv').style.display='none'}, 3000); return false
+            }
+        }else{
+            console.log("nie dziala");
+        }
+    }
+}
+
+function prepareCzujnikiMasyPowietrzaJSON(){
+    var brakMocy = parseInt(document.querySelector('input[name="0"]:checked').value);
+    var nierownaPraca = parseInt(document.querySelector('input[name="1"]:checked').value);
+
+    sendCzujnikiMasyPowietrzaJSON(brakMocy, nierownaPraca);
+}
+
+function sendCzujnikiMasyPowietrzaJSON(brakMocy, nierownaPraca) {
+    const xmlhttp = new XMLHttpRequest();
+    const url="/silnik/czujniki/masy";
+    xmlhttp.open("POST", url, true);
+    xmlhttp.setRequestHeader("Content-Type", "application/json");
+    xmlhttp.send(JSON.stringify({
+        "czyBrakMocyPodczasPrzyspieszania": brakMocy,
+        "czyNierownaPracaSilnikaNaJalowymBiegu": nierownaPraca,
+        "wiadomosc": ""
+    }));
+
+    xmlhttp.onreadystatechange = function(){
+        if(xmlhttp.status == 200){
+            var object = (xmlhttp.responseText);
+            document.getElementById('containerDiv').style.display = "none";
+            if(object.toString().length < 4){
+                //nie pokazuj nic
+            }else {
+                document.getElementById("containerDiv").innerHTML = object.toString();
+                document.getElementById('containerDiv').style.display = "block";
+
+                //hide after 3s
+                setTimeout(function () {document.getElementById('containerDiv').style.display='none'}, 3000); return false
+            }
+        }else{
+            console.log("nie dziala");
+        }
+    }
+}
+
+//czujniki polozenia walu korbowego
+
+function prepareCzujnikiPolozeniaWaluKorbowegoJSON(){
+    var nierownaPraca = parseInt(document.querySelector('input[name="0"]:checked').value);
+
+    sendCzujnikiPolozeniaWaluKorbowegoJSON(nierownaPraca);
+}
+
+function sendCzujnikiPolozeniaWaluKorbowegoJSON(nierownaPraca) {
+    const xmlhttp = new XMLHttpRequest();
+    const url="/silnik/czujniki/polozenia";
+    xmlhttp.open("POST", url, true);
+    xmlhttp.setRequestHeader("Content-Type", "application/json");
+    xmlhttp.send(JSON.stringify({
+        "czyNierownaPracaSilnika": nierownaPraca,
+        "wiadomosc": ""
+    }));
+
+    xmlhttp.onreadystatechange = function(){
+        if(xmlhttp.status == 200){
+            var object = (xmlhttp.responseText);
+            document.getElementById('containerDiv').style.display = "none";
+            if(object.toString().length < 4){
+                //nie pokazuj nic
+            }else {
+                document.getElementById("containerDiv").innerHTML = object.toString();
+                document.getElementById('containerDiv').style.display = "block";
+
+                //hide after 3s
+                setTimeout(function () {document.getElementById('containerDiv').style.display='none'}, 3000); return false
+            }
+        }else{
+            console.log("nie dziala");
+        }
+    }
+}
+
+//silnik - cewka
+
+function prepareCewkaJSON(){
+    var nierownaPraca = parseInt(document.querySelector('input[name="0"]:checked').value);
+    var problemUruchomienie = parseInt(document.querySelector('input[name="1"]:checked').value);
+    var spadekMocy = parseInt(document.querySelector('input[name="2"]:checked').value);
+
+    sendCewkaJSON(nierownaPraca, problemUruchomienie, spadekMocy);
+}
+
+function sendCewkaJSON(nierownaPraca, problemUruchomienie, spadekMocy) {
+    const xmlhttp = new XMLHttpRequest();
+    const url="/silnik/cewka";
+    xmlhttp.open("POST", url, true);
+    xmlhttp.setRequestHeader("Content-Type", "application/json");
+    xmlhttp.send(JSON.stringify({
+        "czyNierownaPracaSilnikaNaJalowymBiegu": nierownaPraca,
+        "czyProblemZUruchomieniem": problemUruchomienie,
+        "czySpadkiMocySilnika": spadekMocy,
+        "wiadomosc": ""
+    }));
+
+    xmlhttp.onreadystatechange = function(){
+        if(xmlhttp.status == 200){
+            var object = (xmlhttp.responseText);
+            document.getElementById('containerDiv').style.display = "none";
+            if(object.toString().length < 4){
+                //nie pokazuj nic
+            }else {
+                document.getElementById("containerDiv").innerHTML = object.toString();
+                document.getElementById('containerDiv').style.display = "block";
+
+                //hide after 3s
+                setTimeout(function () {document.getElementById('containerDiv').style.display='none'}, 3000); return false
+            }
+        }else{
+            console.log("nie dziala");
+        }
+    }
+}
+
+//silnik - przepustnica
+
+function preparePrzepustnicaJSON(){
+    var nierownaPraca = parseInt(document.querySelector('input[name="0"]:checked').value);
+    var silnikWylaczaSie = parseInt(document.querySelector('input[name="1"]:checked').value);
+
+    sendPrzepustnicaJSON(nierownaPraca, silnikWylaczaSie);
+}
+
+function sendPrzepustnicaJSON(nierownaPraca, silnikWylaczaSie) {
+    const xmlhttp = new XMLHttpRequest();
+    const url="/silnik/przepustnica";
+    xmlhttp.open("POST", url, true);
+    xmlhttp.setRequestHeader("Content-Type", "application/json");
+    xmlhttp.send(JSON.stringify({
+        "czyNierownaPracaMotoru": nierownaPraca,
+        "czySilnikWylaczaSiePodczasHamowania": silnikWylaczaSie,
+        "wiadomosc": ""
+    }));
+
+    xmlhttp.onreadystatechange = function(){
+        if(xmlhttp.status == 200){
+            var object = (xmlhttp.responseText);
+            document.getElementById('containerDiv').style.display = "none";
+            if(object.toString().length < 4){
+                //nie pokazuj nic
+            }else {
+                document.getElementById("containerDiv").innerHTML = object.toString();
+                document.getElementById('containerDiv').style.display = "block";
+
+                //hide after 3s
+                setTimeout(function () {document.getElementById('containerDiv').style.display='none'}, 3000); return false
+            }
+        }else{
+            console.log("nie dziala");
+        }
+    }
+}
+
+//silnik - turboburbo
+
+function prepareTurbosprezarkaJSON(){
+    var spadkiMocy = parseInt(document.querySelector('input[name="0"]:checked').value);
+    var zwiekszoneZadymienie = parseInt(document.querySelector('input[name="1"]:checked').value);
+    var wydajeGlosne = parseInt(document.querySelector('input[name="2"]:checked').value);
+
+    sendTurbosprezarkaJSON(spadkiMocy, zwiekszoneZadymienie, wydajeGlosne);
+}
+
+function sendTurbosprezarkaJSON(spadkiMocy, zwiekszoneZadymienie, wydajeGlosne) {
+    const xmlhttp = new XMLHttpRequest();
+    const url="/silnik/turbosprezarka";
+    xmlhttp.open("POST", url, true);
+    xmlhttp.setRequestHeader("Content-Type", "application/json");
+    xmlhttp.send(JSON.stringify({
+        "czySpadkiMocySilnika": spadkiMocy,
+        "czyZwiekszoneZadymienie": zwiekszoneZadymienie,
+        "czyWydajeGlosneOdglosy": wydajeGlosne,
+        "wiadomosc": ""
+    }));
+
+    xmlhttp.onreadystatechange = function(){
+        if(xmlhttp.status == 200){
+            var object = (xmlhttp.responseText);
+            document.getElementById('containerDiv').style.display = "none";
+            if(object.toString().length < 4){
+                //nie pokazuj nic
+            }else {
+                document.getElementById("containerDiv").innerHTML = object.toString();
+                document.getElementById('containerDiv').style.display = "block";
+
+                //hide after 3s
+                setTimeout(function () {document.getElementById('containerDiv').style.display='none'}, 3000); return false
+            }
+        }else{
+            console.log("nie dziala");
+        }
+    }
+}
+
+function prepareTloczkiHamulcoweJSON(){
+    var zabrudzone = parseInt(document.querySelector('input[name="0"]:checked').value);
+    var skor = parseInt(document.querySelector('input[name="1"]:checked').value);
+    var blok = parseInt(document.querySelector('input[name="2"]:checked').value);
+
+    sendTloczkiHamulcoweJSON(zabrudzone, skor, blok);
+}
+
+function sendTloczkiHamulcoweJSON(zabrudzone, skor, blok) {
+    const xmlhttp = new XMLHttpRequest();
+    const url="/hamulce/tloczkihamulcowe";
+    xmlhttp.open("POST", url, true);
+    xmlhttp.setRequestHeader("Content-Type", "application/json");
+    xmlhttp.send(JSON.stringify({
+        "czyZabrudzone": zabrudzone,
+        "czySkorodowane": skor,
+        "czyKolaSieBlokuja": blok,
+        "wiadomosc": ""
+    }));
+
+    xmlhttp.onreadystatechange = function(){
+        if(xmlhttp.status == 200){
+            var object = (xmlhttp.responseText);
+            document.getElementById('containerDiv').style.display = "none";
+            if(object.toString().length < 4){
+                //nie pokazuj nic
+            }else {
+                document.getElementById("containerDiv").innerHTML = object.toString();
+                document.getElementById('containerDiv').style.display = "block";
+
+                //hide after 3s
+                setTimeout(function () {document.getElementById('containerDiv').style.display='none'}, 3000); return false
+            }
+        }else{
+            console.log("nie dziala");
+        }
+    }
+}
+
+function prepareTarczeHamulcoweJSON(){
+    var przegrzewaja = parseInt(document.querySelector('input[name="0"]:checked').value);
+    var uszkodzone = parseInt(document.querySelector('input[name="1"]:checked').value);
+
+    sendTarczeHamulcoweJSON(przegrzewaja, uszkodzone);
+}
+
+function sendTarczeHamulcoweJSON(przegrzewaja, uszkodzone) {
+    const xmlhttp = new XMLHttpRequest();
+    const url="/hamulce/tarczehamulcowe";
+    xmlhttp.open("POST", url, true);
+    xmlhttp.setRequestHeader("Content-Type", "application/json");
+    xmlhttp.send(JSON.stringify({
+        "CzySiePrzegrzewaja": przegrzewaja,
+        "CzySaUszkodzone": uszkodzone,
+        "wiadomosc": ""
+    }));
+
+    xmlhttp.onreadystatechange = function(){
+        if(xmlhttp.status == 200){
+            var object = (xmlhttp.responseText);
+            document.getElementById('containerDiv').style.display = "none";
+            if(object.toString().length < 4){
+                //nie pokazuj nic
+            }else {
+                document.getElementById("containerDiv").innerHTML = object.toString();
+                document.getElementById('containerDiv').style.display = "block";
+
+                //hide after 3s
+                setTimeout(function () {document.getElementById('containerDiv').style.display='none'}, 3000); return false
+            }
+        }else{
+            console.log("nie dziala");
+        }
+    }
+}
+function preparePompaHamulcowaJSON(){
+    var plyn = parseInt(document.querySelector('input[name="0"]:checked').value);
+    var woda = parseInt(document.querySelector('input[name="1"]:checked').value);
+    var cisnienie = parseInt(document.querySelector('input[name="2"]:checked').value);
+
+    sendPompaHamulcowaJSON(plyn, woda, cisnienie);
+}
+
+function sendPompaHamulcowaJSON(plyn, woda, cisnienie) {
+    const xmlhttp = new XMLHttpRequest();
+    const url="/hamulce/pompahamulcowa";
+    xmlhttp.open("POST", url, true);
+    xmlhttp.setRequestHeader("Content-Type", "application/json");
+    xmlhttp.send(JSON.stringify({
+        "czyJestPlynHamulcowy": plyn,
+        "iloscWodyWplynieHamulcowym": woda,
+        "czyJestOdpowiednieCisnienie": cisnienie,
+        "wiadomosc": ""
+    }));
+
+    xmlhttp.onreadystatechange = function(){
+        if(xmlhttp.status == 200){
+            var object = (xmlhttp.responseText);
+            document.getElementById('containerDiv').style.display = "none";
+            if(object.toString().length < 4){
+                //nie pokazuj nic
+            }else {
+                document.getElementById("containerDiv").innerHTML = object.toString();
+                document.getElementById('containerDiv').style.display = "block";
+
+                //hide after 3s
+                setTimeout(function () {document.getElementById('containerDiv').style.display='none'}, 3000); return false
+            }
+        }else{
+            console.log("nie dziala");
+        }
+    }
+}
